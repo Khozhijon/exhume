@@ -8,7 +8,7 @@ Kiroween 2026 entry, category **Resurrection**.
 - Live app: _added when the repository is published_
 - Demo video: _added when the video is published_
 
-![The six formats Exhume reads, as tombstones](docs/img/graveyard.png)
+![The six formats Exhume reads, as tombstones](docs/img/graveyard.jpg)
 
 ## What it does
 
@@ -37,6 +37,12 @@ Three rooms:
 
 Everything runs in the browser tab. No upload, no server, no analytics; it works offline after the
 first load.
+
+| | |
+|---|---|
+| ![A MacPaint drawing in a System 1 window](docs/img/macpaint.jpg) | ![The Autopsy: annotated hex view](docs/img/autopsy.jpg) |
+| ![A Lotus 1-2-3 worksheet with a decompiled formula](docs/img/lotus.jpg) | ![A dBASE table with deleted rows](docs/img/dbase.jpg) |
+| ![A WordStar letter on fan-fold paper](docs/img/wordstar.jpg) | ![The coroner's report for a truncated file](docs/img/coroner.jpg) |
 
 ## Why
 
@@ -80,6 +86,7 @@ npm run dev       # http://localhost:5173
 npm run build     # static site in dist/
 npm run samples   # regenerate the built-in specimens
 npm run mcp       # start exhume-mcp on stdio
+npm run interop   # cross-check against ffmpeg's PCX and IFF codecs (needs ffmpeg)
 ```
 
 ## Built with Kiro (and what was not)
@@ -121,8 +128,12 @@ does not stretch to 26 implementation tasks. So:
 - dBASE memo files (`.dbt`) are not read; memo fields come back empty with a warning.
 - WordStar 5 and later formatting sequences are skipped (with a warning); the text is kept.
 - Lotus WK3/WK4 are not supported. Characters above 0x7F in worksheets are read as Latin-1, not LICS.
-- The decoders were verified with generated files, hand-built fixtures and property tests. They have
-  not yet been run against a large collection of files from the wild.
+- The decoders were verified with generated files, hand-built fixtures, property tests and, for the
+  picture formats, an independent implementation: `npm run interop` checks that ffmpeg decodes our
+  PCX and IFF samples to exactly the pixels Exhume decodes, and that Exhume decodes PCX files written
+  by ffmpeg (1-bit, 8-bit palette, 24-bit) to exactly the pixels ffmpeg decodes. The same script has
+  checks against SheetJS for Lotus and dBASE files; those have not been run yet. Nothing has been run
+  against a large collection of files from the wild.
 
 ## Licence
 

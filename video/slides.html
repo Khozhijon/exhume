@@ -14,13 +14,13 @@
   h1 em { color:var(--ember); font-style:normal; }
   .sub { color:var(--dim); font-size:19px; margin:0 0 22px; }
   .cols { display:grid; gap:18px; flex:1; min-height:0; }
-  .c3 { grid-template-columns:repeat(3,1fr); } .c2 { grid-template-columns:1fr 1fr; } .c4 { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+  .c3 { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:1fr; } .c2 { grid-template-columns:repeat(2,minmax(0,1fr)); } .c4 { grid-template-columns:repeat(2,minmax(0,1fr)); grid-template-rows:1fr 1fr; }
   .card { border:1px solid rgba(232,228,216,.18); border-radius:8px; background:#07090d; padding:16px 18px; overflow:hidden; display:flex; flex-direction:column;
     opacity:.0; transform:translateY(14px); transition:opacity .6s, transform .6s; }
   .card.on { opacity:1; transform:none; }
   .card h2 { font-family:var(--serif); font-weight:400; font-size:25px; margin:0 0 4px; color:var(--bone); }
   .card .path { font-family:var(--mono); font-size:13px; color:var(--ember); margin:0 0 10px; }
-  pre { font-family:var(--mono); font-size:13.5px; line-height:1.5; white-space:pre-wrap; margin:0; color:#cfd3da; }
+  pre { font-family:var(--mono); font-size:13px; line-height:1.5; white-space:pre-wrap; margin:0; color:#cfd3da; }
   pre b { color:var(--phosphor); font-weight:400; } pre i { color:var(--ember); font-style:normal; } pre s { color:#6c7280; text-decoration:none; }
   .count { display:flex; gap:44px; justify-content:center; padding-top:18px; font-family:var(--serif); font-size:26px; color:var(--dim); }
   .count b { color:var(--ember); font-weight:400; font-size:40px; margin-right:8px; }
@@ -47,8 +47,8 @@
     <div class="card" data-step="1"><h2>requirements.md</h2><p class="path">EARS acceptance criteria</p>
 <pre><s>### Requirement 2: MacPaint Decoder</s>
 
-4. <i>WHEN</i> decoding the bitmap, <i>THE SYSTEM SHALL</i>
-   apply PackBits row by row ...
+4. <i>WHEN</i> decoding the bitmap, <i>THE SYSTEM</i>
+   <i>SHALL</i> apply PackBits row by row ...
 
 6. <i>IF</i> the compressed input is exhausted
    before 51 840 bytes are produced,

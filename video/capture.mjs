@@ -19,12 +19,15 @@ const require = createRequire(process.env.PLAYWRIGHT_FROM ?? path.resolve(ROOT, 
 const { chromium } = require('playwright');
 
 const GAP = 0.7; // seconds of silence between narration clips
-const KEYS = ['01-hook', '02-drop', '03-autopsy', '04-lotus', '05-more', '06-spec', '07-kiro', '08-honest', '09-close'];
+// Longer silences where the picture has to leave one sample and open another.
+const LEAD = { '04-lotus': 2.6, '05a-dbase': 2.6, '05b-wordstar': 2.7, '05c-damaged': 1.9, '06-spec': 1.2 };
+const KEYS = ['01-hook', '02-drop', '03-autopsy', '04-lotus', '05a-dbase', '05b-wordstar', '05c-damaged', '06-spec', '07-kiro', '08-honest', '09-close'];
 const dur = Object.fromEntries(KEYS.map((k) => {
   const f = path.join(ROOT, 'video/nar', `${k}.voice.wav`);
   if (!fs.existsSync(f)) {
     // rehearsal without narration: estimate from the word count (about 2.5 words a second)
-    const words = fs.readFileSync(path.join(ROOT, 'video/nar', `${k}.txt`), 'utf8').trim().split(/\s+/).length;
+    const txt = path.join(ROOT, 'video/nar', `${k}.txt`);
+    const words = fs.existsSync(txt) ? fs.readFileSync(txt, 'utf8').trim().split(/\s+/).length : 12;
     return [k, words / 2.5 + 1];
   }
   const s = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString().trim();
@@ -32,7 +35,7 @@ const dur = Object.fromEntries(KEYS.map((k) => {
 }));
 const start = {};
 let t = 1.0; // one second of picture before the first word
-for (const k of KEYS) { start[k] = t; t += dur[k] + GAP; }
+for (const k of KEYS) { t += (LEAD[k] ?? GAP) - GAP; start[k] = t; t += dur[k] + GAP; }
 const TOTAL = t + 1.5;
 fs.mkdirSync(path.join(ROOT, 'video/out'), { recursive: true });
 fs.writeFileSync(path.join(ROOT, 'video/out/timeline.json'), JSON.stringify({ gap: GAP, total: TOTAL, start, dur }, null, 2));
@@ -141,77 +144,97 @@ const home = async () => { await click('.specimen-head .btn-quiet', 0, 500); awa
 const dig = async (file) => { await click(`button[aria-label*="${file}"]`, 0, 700); await page.waitForSelector('.specimen'); };
 
 // ================= the timeline =================
+// `until` waits for a point on the narration timeline; if the picture is running late it says so,
+// so the leads below can be tuned. HOP is the time a "back to the graveyard, dig up a sample" takes.
+const HOP = 2.6;
+const mark = async (label, sec) => {
+  const late = now() - sec;
+  if (late > 0.25) console.log(`late by ${late.toFixed(2)} s at ${label}`);
+  await until(sec);
+};
+const park = () => glide(1262, 706, 500); // pointer out of the way
+
 // 01 hook: the graveyard
-await until(at('01-hook', 0.30));
+await mark('hook scroll', at('01-hook', 0.28));
 await scrollTo(330, 2200);
-await glide(190, 420, 900);
-await until(at('01-hook', 0.55)); await glide(520, 430, 1200);   // MacPaint ... Lotus
-await until(at('01-hook', 0.72)); await glide(1090, 430, 1400);  // ... WordStar
-await until(at('01-hook', 0.90)); await scrollTo(0, 1200);
+await glide(190, 430, 900);
+await mark('hook stones', at('01-hook', 0.52)); await glide(520, 440, 1300);   // MacPaint ... Lotus
+await mark('hook stones 2', at('01-hook', 0.70)); await glide(1090, 440, 1500); // ... WordStar
+await mark('hook top', at('01-hook', 0.88)); await scrollTo(0, 1100);
 
 // 02 drop: a MacPaint drawing
-await until(start['02-drop'] + 0.2);
+await mark('drop', start['02-drop'] + 0.1);
 await drop('GHOST.MAC');
-await until(at('02-drop', 0.50)); await glide(330, 330, 900);
-await until(at('02-drop', 0.62)); await scrollTo(250, 1500);
-await until(at('02-drop', 0.86)); await scrollTo(0, 900);
+await mark('drop look', at('02-drop', 0.50)); await glide(330, 360, 900);
+await mark('drop scroll', at('02-drop', 0.64)); await scrollTo(260, 1500);
+await mark('drop back', at('02-drop', 0.88)); await scrollTo(0, 800);
 
 // 03 autopsy
-await until(start['03-autopsy'] - 0.2);
-await click('[role="tab"]', 1);
-await until(at('03-autopsy', 0.30));
-await click('.hex-row .byte', 16 * 5 + 4);                       // a byte inside the brush patterns
-await until(at('03-autopsy', 0.52));
-await click('.tree-node:has-text("bitmap")', 0);                 // the compressed bitmap
+await mark('autopsy tab', start['03-autopsy'] - 0.3);
+await click('[role="tab"]', 1, 600);
+await mark('autopsy byte', at('03-autopsy', 0.30));
+await click('.hex-row .byte', 16 * 5 + 4, 600);                  // a byte inside the brush patterns
+await mark('autopsy bitmap', at('03-autopsy', 0.50));
+await click('.tree-node:has-text("bitmap")', 0, 600);            // the compressed bitmap
 await page.locator('.tree-row:has(.tree-node:has-text("bitmap")) .tree-twist').first().click();
-await until(at('03-autopsy', 0.68));
-await click('.tree-node:has-text("row 41")', 0);
-await until(at('03-autopsy', 0.86));
-await glide(640, 178, 800);                                      // the file map: every byte accounted for
+await mark('autopsy row', at('03-autopsy', 0.64));
+await click('.tree-node:has-text("row 41")', 0, 600);            // one row of compressed pixels
+await mark('autopsy map', at('03-autopsy', 0.84));
+await scrollTo(0, 500);
+await glide(640, 178, 700);                                      // the file map: every byte accounted for
 
-// 04 lotus
-await until(start['04-lotus'] - 1.6);
+// 04 lotus (the hop happens in the silence before the clip)
+await mark('lotus hop', start['04-lotus'] - 2.5);
 await home();
 await dig('BUDGET87.WK1');
-await until(at('04-lotus', 0.32)); await click('#cell-3-4');     // E4: @SUM(B4..D4)
-await until(at('04-lotus', 0.52)); await click('#cell-15-1');    // B16: @IF(...)
-await until(at('04-lotus', 0.78)); await click('.export-buttons button:has-text("XLSX")');
+await mark('lotus formula', at('04-lotus', 0.30)); await click('#cell-3-4', 0, 600);   // E4: @SUM(B4..D4)
+await mark('lotus if', at('04-lotus', 0.52)); await click('#cell-15-1', 0, 600);       // B16: @IF(...)
+await mark('lotus export', at('04-lotus', 0.74)); await click('.export-buttons button:has-text("XLSX")', 0, 600);
 
-// 05 more: dBASE, WordStar, a damaged file
-await until(start['05-more'] - 1.6);
+// 05a dBASE: the deleted rows are still there
+await mark('dbase hop', start['05a-dbase'] - 2.5);
 await home();
 await dig('RESIDENT.DBF');
-await until(at('05-more', 0.14)); await click('.table-content tbody tr', 3);   // a deleted row, still there
-await until(at('05-more', 0.30));
+await mark('dbase deleted', at('05a-dbase', 0.30)); await click('.table-content tbody tr', 3, 600);
+
+// 05b WordStar
+await mark('wordstar hop', start['05b-wordstar'] - 2.6);
 await home();
 await dig('LETTER.WS');
-await until(at('05-more', 0.42)); await scrollTo(260, 1500);
-await until(at('05-more', 0.60));
-await drop('GHOST.MAC', 'DAMAGED.MAC', 7000);                    // the same drawing, cut off after 7,000 bytes
-await until(at('05-more', 0.78)); await click('[role="tab"]', 2);
-await glide(420, 420, 900);
+await mark('wordstar scroll', at('05b-wordstar', 0.25)); await scrollTo(230, 1500);
+
+// 05c a damaged file: the same drawing, cut off after 7,000 bytes
+await mark('damaged drop', start['05c-damaged'] - 1.8);
+await drop('GHOST.MAC', 'DAMAGED.MAC', 7000);
+await mark('damaged scroll', at('05c-damaged', 0.22)); await scrollTo(330, 1100);
+await mark('coroner', at('05c-damaged', 0.50));
+await scrollTo(0, 400);
+await click('[role="tab"]', 2, 500);
+await glide(420, 430, 900);
 
 // 06-08 the Kiro slides
-await until(start['06-spec'] - 0.5);
+await mark('slides', start['06-spec'] - 0.9);
 await page.goto(`${BASE}/slides.html`);
 await page.evaluate(() => window.show('spec'));
-for (const [n, f] of [[1, 0.16], [2, 0.42], [3, 0.62], [4, 0.74]]) { await until(at('06-spec', f)); await page.evaluate((n) => window.step(n), n); }
-await until(start['07-kiro'] - 0.4);
+await page.mouse.move(1262, 706); mouse = { x: 1262, y: 706 };
+for (const [n, f] of [[1, 0.14], [2, 0.40], [3, 0.60], [4, 0.72]]) { await mark(`spec ${n}`, at('06-spec', f)); await page.evaluate((n) => window.step(n), n); }
+await mark('kiro slide', start['07-kiro'] - 0.4);
 await page.evaluate(() => window.show('kiro'));
-for (const [n, f] of [[1, 0.02], [2, 0.26], [3, 0.52], [4, 0.82]]) { await until(at('07-kiro', f)); await page.evaluate((n) => window.step(n), n); }
-await until(start['08-honest'] - 0.4);
+for (const [n, f] of [[1, 0.02], [2, 0.24], [3, 0.50], [4, 0.80]]) { await mark(`kiro ${n}`, at('07-kiro', f)); await page.evaluate((n) => window.step(n), n); }
+await mark('honest slide', start['08-honest'] - 0.4);
 await page.evaluate(() => window.show('honest'));
-for (const [n, f] of [[1, 0.05], [2, 0.42]]) { await until(at('08-honest', f)); await page.evaluate((n) => window.step(n), n); }
+for (const [n, f] of [[1, 0.04], [2, 0.40]]) { await mark(`honest ${n}`, at('08-honest', f)); await page.evaluate((n) => window.step(n), n); }
 
 // 09 close: the graveyard once more, then the end card
-await until(start['09-close'] - 0.4);
+await mark('close', start['09-close'] - 0.5);
 await page.goto(APP);
 await page.waitForSelector('.stone');
-await page.mouse.move(640, 640);
-await until(at('09-close', 0.10)); await scrollTo(330, 2500);
-await until(at('09-close', 0.62));
+await page.mouse.move(1262, 706); mouse = { x: 1262, y: 706 };
+await mark('close scroll', at('09-close', 0.08)); await scrollTo(330, 2600);
+await mark('end card', at('09-close', 0.66));
 await page.goto(`${BASE}/slides.html#end`);
-await until(TOTAL);
+await mark('end', TOTAL);
+if (now() > TOTAL + 0.3) console.log(`picture ran ${(now() - TOTAL).toFixed(2)} s over the narration`);
 
 await cdp.send('Page.stopScreencast');
 const endTs = Date.now() / 1000;

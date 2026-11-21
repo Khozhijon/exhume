@@ -53,3 +53,4 @@
 .crt td.right { text-align: right; }
 .crt td.sel { background: var(--phosphor); color: #020a04; text-shadow: none; }
 .crt td.formula { color: #b8ffd0; }
+.crt td.sel, .crt td.sel.formula { color: #020a04; }
