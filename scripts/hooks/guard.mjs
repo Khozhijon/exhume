@@ -1,11 +1,15 @@
 #!/usr/bin/env node
 // Kiro hook (PostFileSave, command): enforce the project's promises on the file the agent just saved.
 // Receives the hook event as JSON on stdin. Exit 0 = fine. Any other exit sends stderr back to the agent.
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, appendFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 
 function readEvent() {
-  try { return JSON.parse(readFileSync(0, "utf8") || "{}"); } catch { return {}; }
+  try {
+    const raw = readFileSync(0, "utf8");
+    if (process.env.EXHUME_HOOK_DEBUG) appendFileSync(process.env.EXHUME_HOOK_DEBUG, raw + "\n---\n");
+    return JSON.parse(raw || "{}");
+  } catch { return {}; }
 }
 function findPath(o) {
   if (!o || typeof o !== "object") return null;

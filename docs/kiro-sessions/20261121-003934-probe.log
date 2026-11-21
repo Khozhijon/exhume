@@ -1,0 +1,11 @@
+# kiro-cli kiro-cli 3.5.0 run: probe
+# model: qwen3-coder-next
+# extra args: --agent gravedigger
+# prompt file: docs/kiro-sessions/prompts/00-usage-probe.md
+
+ready
+# exit code: 0
+# credits after run:
+Estimated Usage | resets on 2026-12-01 | KIRO FREE
+Credits (14.46 of 50 covered in plan), 28.9%
+Manage your plan at https://app.kiro.dev/account/usage

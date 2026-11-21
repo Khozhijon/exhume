@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 // Kiro hook (PostFileSave, command): run the tests that belong to the file the agent just saved.
 // src/formats/<id>/* -> that format's tests; src/core/* and src/export/* -> their folder's tests.
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, appendFileSync } from "node:fs";
 import { relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 function readEvent() {
-  try { return JSON.parse(readFileSync(0, "utf8") || "{}"); } catch { return {}; }
+  try {
+    const raw = readFileSync(0, "utf8");
+    if (process.env.EXHUME_HOOK_DEBUG) appendFileSync(process.env.EXHUME_HOOK_DEBUG, raw + "\n---\n");
+    return JSON.parse(raw || "{}");
+  } catch { return {}; }
 }
 function findPath(o) {
   if (!o || typeof o !== "object") return null;

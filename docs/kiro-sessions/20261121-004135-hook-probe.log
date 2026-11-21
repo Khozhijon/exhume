@@ -1,0 +1,41 @@
+# kiro-cli kiro-cli 3.5.0 run: hook-probe
+# model: minimax-m2.1
+# extra args: --agent gravedigger --trust-tools=run_command,fs_read,fs_write
+# prompt file: docs/kiro-sessions/prompts/00-hook-probe.md
+
+
+
+
+[tool] Test basic node command
+[tool] status: Failed
+[tool] status: InProgress
+[tool] status: InProgress
+[tool] status: Completed
+
+
+1. **node -e "console.log(6*7)"** output:
+   ```
+   42
+   ```
+
+2. **curl --version**: Blocked by the shell guard hook with the message:
+   ```
+   Exhume shell guard blocked this command (no downloads or network tools):
+     curl --version
+   Use npm run typecheck / npm test / npx vitest / node scripts, or say what you need in your report.
+   ```
+
+3. **Hook text from session start** (verbatim):
+   ```
+   [Session Start Hook Output]
+   Spec exhume-core: 1/26 top-level tasks done.
+   Next open task: 2. ByteReader and ByteWriter
+   Format modules present: none
+   Uncommitted files: 18
+   Reminder: do not commit or push. Run typecheck and the touched tests before finishing.
+   ```
+# exit code: 0
+# credits after run:
+Estimated Usage | resets on 2026-12-01 | KIRO FREE
+Credits (14.58 of 50 covered in plan), 29.2%
+Manage your plan at https://app.kiro.dev/account/usage

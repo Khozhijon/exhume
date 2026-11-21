@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "mcp/dist",
+    "rootDir": "src",
+    "declaration": false,
+    "sourceMap": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/core",
+    "src/formats",
+    "src/export"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.prop.test.ts"
+  ]
+}

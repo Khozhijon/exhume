@@ -30,3 +30,11 @@ inclusion: always
 - Never weaken or delete a failing test to make it pass. Fix the code, or report the conflict.
 - Do not run `git commit`, `git push`, installers, or anything outside this repository.
 - Keep files under ~300 lines; split by responsibility.
+
+## Module conventions
+- Relative imports in `src/` are written with a `.js` extension (`import { x } from './types.js'`), so
+  the same sources work in Vite and when compiled for Node.
+- `npm run build:core` compiles `src/core`, `src/formats` and `src/export` to `mcp/dist/` for the MCP
+  server and the samples script. Node code imports from `mcp/dist/...`, never from `src/`.
+- Shell access in headless runs is limited by `.kiro/hooks/shell-guard.json`: no git writes, no
+  deletes outside the repo, no downloads, no sudo.

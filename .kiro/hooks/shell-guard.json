@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Shell guard",
+      "description": "Before the agent runs a shell command, refuse git writes, sudo, downloads, installers, unlisted dependencies and anything that touches files outside the repository. This is what makes it safe to trust the shell tool in headless runs.",
+      "trigger": "PreToolUse",
+      "matcher": "shell",
+      "action": { "type": "command", "command": "node scripts/hooks/shell-guard.mjs" },
+      "timeout": 10
+    }
+  ]
+}

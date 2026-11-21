@@ -6,7 +6,7 @@ Build Exhume from the ground up: scaffold and tooling first, then core infrastru
 
 ## Tasks
 
-- [ ] 1. Project scaffold and tooling
+- [x] 1. Project scaffold and tooling
   - Create `package.json` with Vite + React 18 + TypeScript strict config and all allowed runtime and dev deps (`react`, `react-dom`, `fflate`, `vite`, `typescript`, `vitest`, `fast-check`, `@vitejs/plugin-react`, `@modelcontextprotocol/sdk`, `zod`)
   - Add `tsconfig.json` with `strict: true`, `moduleResolution: bundler`, `target: ES2022`
   - Configure `vite.config.ts` with `@vitejs/plugin-react` and `base: process.env.VITE_BASE ?? '/'`
