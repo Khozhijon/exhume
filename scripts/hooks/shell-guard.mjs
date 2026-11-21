@@ -29,12 +29,26 @@ const banned = [
   [/\brm\s+(-[a-zA-Z]*\s+)*(\/|~|\$HOME|\.\.)/, "no deletes outside the repository"],
   [/\brm\s+-[a-zA-Z]*r[a-zA-Z]*\s+(\.git|\.kiro|docs|src)\b/, "do not delete project folders"],
   [/\bnpm\s+(publish|login|adduser|token|config\s+set)\b/, "no npm account actions"],
-  [/\b(npm|pnpm|yarn)\s+(install|i|add)\s+(?!-)[^\s]/, "ask before adding a dependency (tech.md lists what is allowed)"],
   [/\b(brew|pip|pip3|gem|cargo)\s+install\b/, "no installers"],
   [/(^|[;&|]\s*)(open|osascript|defaults|launchctl|killall|chmod\s+-R|chown)\b/, "no system changes"],
   [/>\s*(\/|~)(?!\/?dev\/null)/, "no writes outside the repository"],
 ];
+// `npm install` with no package names is fine; naming a package means adding a dependency.
+function addsDependency(cmd) {
+  for (const part of cmd.split(/&&|\|\||;|\|/)) {
+    const m = part.trim().match(/^(?:npm|pnpm|yarn)\s+(?:install|i|add)\b(.*)$/);
+    if (!m) continue;
+    const rest = (m[1] ?? "").trim().split(/\s+/).filter(Boolean);
+    if (rest.some((t) => !t.startsWith("-") && !/^[0-9]*[<>]/.test(t))) return true;
+  }
+  return false;
+}
+
 for (const cmd of cmds) {
+  if (addsDependency(cmd)) {
+    console.error(`Exhume shell guard blocked this command (adding a dependency: tech.md lists what is allowed, ask in your report instead):\n  ${cmd}`);
+    process.exit(2);
+  }
   for (const [re, why] of banned) {
     if (re.test(cmd)) {
       console.error(`Exhume shell guard blocked this command (${why}):\n  ${cmd}\nUse npm run typecheck / npm test / npx vitest / node scripts, or say what you need in your report.`);

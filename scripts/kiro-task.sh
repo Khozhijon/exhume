@@ -21,7 +21,10 @@ section() { # print a "## x"/"### x" section of design.md whose heading contains
   echo
   echo "Work economically: the task text and the design sections you need are inlined below, so do NOT"
   echo "read requirements.md, design.md or tasks.md in full. Use grep on them only for a specific detail."
-  echo "Read existing source files you depend on once. Write each file in one go. No exploratory listing."
+  echo "Read existing source files you depend on once (several in one step). Write each file in one go,"
+  echo "several files per step. No exploratory listing, no long narration. Check with ONE command:"
+  echo "\`npm run -s typecheck && npx vitest run <folders you touched> 2>&1 | tail -40\`. At most 3 fix rounds;"
+  echo "if something still fails after that, stop and say exactly what fails."
   echo
   echo "## The task (from tasks.md)"
   awk -v n="$n" '
@@ -37,7 +40,6 @@ section() { # print a "## x"/"### x" section of design.md whose heading contains
   if [ -n "$note" ] && [ -f "$note" ]; then echo; echo "## Notes from the reviewer"; cat "$note"; fi
   echo
   echo "## Finish"
-  echo "Run \`npm run typecheck\` and \`npx vitest run <the folders you touched>\`. Fix failures in the code."
-  echo "Then mark task $n and its sub-tasks [x] in tasks.md and give the short report your instructions describe."
+  echo "When the check command passes, mark task $n and its sub-tasks [x] in tasks.md and give a report of at most 12 lines."
 } > "$prompt"
 exec scripts/kiro.sh "task-$(printf %02d "$n")" "$model" "$prompt" --agent gravedigger --trust-tools=run_command,fs_read,fs_write

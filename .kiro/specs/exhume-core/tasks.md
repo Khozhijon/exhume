@@ -18,12 +18,12 @@ Build Exhume from the ground up: scaffold and tooling first, then core infrastru
   - Create `index.html`, `src/main.tsx`, `src/App.tsx` rendering an "Exhume" heading with no crash
   - _Requirements: 1.1, 8.1, 8.3_
 
-- [ ] 2. ByteReader and ByteWriter
+- [x] 2. ByteReader and ByteWriter
   - Create `src/core/reader.ts` implementing `ByteReader` with all methods: `u8`, `u16le`, `u16be`, `u32le`, `u32be`, `i8`, `i16le`, `i32le`, `f64le`, `bytes(n, label)`, `nullString(label, maxLen?)`, `group(label, fn)`, `skip(n, label)`, `seek(offset)`, `annotations()`; expose `offset`, `size`, `remaining` as readonly properties; every read automatically records an `Annotation` span
   - Create `src/core/writer.ts` implementing `ByteWriter` with: `writeU8`, `writeU16le`, `writeU16be`, `writeU32le`, `writeU32be`, `writeI16le`, `writeI32le`, `writeF64le`, `writeBytes`, `toUint8Array`, readonly `length`
   - Create `src/core/reader.test.ts` with example tests covering all read methods, group nesting, seek, skip, and bounds-checking behaviour
   - Create `src/core/writer.test.ts` with example tests covering all write methods and round-trip with DataView reads
-  - [ ]* 2.1 Write property test for ByteReader annotations (Property P3)
+  - [x]* 2.1 Write property test for ByteReader annotations (Property P3)
     - **Property P3: Annotations are honest** — for a fully-written then fully-read file, top-level annotations cover every byte exactly once with no gaps and no overlaps
     - **Validates: Requirements 9.3, 9.6**
   - _Requirements: 9.1, 9.2, 9.3_

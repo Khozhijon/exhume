@@ -5,7 +5,7 @@
       "name": "Test what was touched",
       "description": "After the agent saves a file in src/formats/<id>, src/core or src/export, run that folder's example and property tests and hand failures back to the agent.",
       "trigger": "PostFileSave",
-      "matcher": "^src/(formats|core|export)/.*\\.ts$",
+      "matcher": "(^|/)src/(formats|core|export)/.*\\.ts$",
       "action": { "type": "command", "command": "node scripts/hooks/test-touched.mjs" },
       "timeout": 60
     }

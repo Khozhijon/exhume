@@ -13,21 +13,21 @@
     "mcp": "npm run -s build:core && node mcp/server.mjs"
   },
   "dependencies": {
+    "fflate": "^0.8.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "fflate": "^0.8.2"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.1",
     "@modelcontextprotocol/sdk": "^1.12.0",
+    "@types/node": "^22.7.0",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "fast-check": "^3.21.0",
     "typescript": "~5.6.2",
     "vite": "^5.4.6",
     "vitest": "^2.1.1",
-    "fast-check": "^3.21.0",
-    "zod": "^3.23.8",
-    "@types/react": "^18.3.5",
-    "@types/react-dom": "^18.3.0",
-    "@types/node": "^22.7.0"
+    "zod": "^3.23.8"
   },
   "license": "MIT",
   "description": "Exhume raises dead file formats from the grave: MacPaint, PCX, IFF ILBM, Lotus 1-2-3, dBASE and WordStar, decoded in your browser."

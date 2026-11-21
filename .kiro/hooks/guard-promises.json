@@ -5,7 +5,7 @@
       "name": "Guard the promises",
       "description": "After the agent saves a source file, check it against the product promises: no network calls, no DOM in format code, no raw DataView outside ByteReader, no UTF-8 decoding of legacy text, no any, no oversized files. Problems go back to the agent.",
       "trigger": "PostFileSave",
-      "matcher": "^(src|mcp)/.*\\.(ts|tsx|mjs)$",
+      "matcher": "(^|/)(src|mcp)/.*\\.(ts|tsx|mjs)$",
       "action": { "type": "command", "command": "node scripts/hooks/guard.mjs" },
       "timeout": 20
     }
