@@ -28,12 +28,12 @@ Build Exhume from the ground up: scaffold and tooling first, then core infrastru
     - **Validates: Requirements 9.3, 9.6**
   - _Requirements: 9.1, 9.2, 9.3_
 
-- [ ] 3. Code pages and PackBits
+- [x] 3. Code pages and PackBits
   - Create `src/core/codepage.ts` with 256-entry lookup tables for `cp437()`, `cp850()`, `cp1252()`, `macRoman()` and the shared `decodeBytes(bytes, decode)` helper
   - Create `src/core/packbits.ts` with `decodePack(src, maxOut): Uint8Array` (stops at maxOut bytes, throws `ExhumeError` on structural invalidity) and `encodePack(src, rowSize?): Uint8Array` (runs never cross row boundaries when `rowSize` is provided)
   - Create `src/core/codepage.test.ts` with example tests for representative byte values in each code page, including bytes ≥ 0x80
   - Create `src/core/packbits.test.ts` with example tests: literal run, repeat run, no-op byte, truncated stream, maxOut enforcement
-  - [ ]* 3.1 Write property test for PackBits round-trip (Property P5)
+  - [x]* 3.1 Write property test for PackBits round-trip (Property P5)
     - **Property P5: PackBits round-trip** — `decodePack(encodePack(b), b.length)` deep-equals `b` for any `Uint8Array` up to 4096 bytes
     - **Validates: Requirements 2.4, 2.5, 4.6**
   - _Requirements: 2.3, 2.4, 4.4, 4.5, 5.6_

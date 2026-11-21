@@ -1,14 +1,13 @@
 // Registry of format modules
 
 import { ExhumeError } from './types.js';
+import { MAX_FILE_SIZE } from './limits.js';
 import type { FormatModule, Specimen } from './types.js';
 
-// Empty module list - will be populated by format modules
-const modules: FormatModule[] = [];
+import { allFormats } from '../formats/index.js';
 
-export function register(module: FormatModule): void {
-  modules.push(module);
-}
+/** Every supported format, in registration order (the order breaks exact ties). */
+export const modules: readonly FormatModule[] = allFormats;
 
 export function detect(
   bytes: Uint8Array,
@@ -16,7 +15,13 @@ export function detect(
 ): Array<{ module: FormatModule; confidence: number }> {
   const results: Array<{ module: FormatModule; confidence: number }> = [];
   for (const module of modules) {
-    const confidence = module.detect(bytes, fileName);
+    let confidence = 0;
+    try {
+      confidence = module.detect(bytes, fileName);
+    } catch {
+      confidence = 0; // detect must not throw; if one does, it simply does not match
+    }
+    if (!(confidence >= 0 && confidence <= 1)) confidence = 0;
     if (confidence > 0) {
       results.push({ module, confidence });
     }
@@ -54,14 +59,25 @@ export function identify(
   return null;
 }
 
-export function dispatch(
-  bytes: Uint8Array,
-  fileName?: string,
-): Specimen {
+export interface Exhumed {
+  module: FormatModule;
+  specimen: Specimen;
+}
+
+/** Identify and decode. Throws only ExhumeError. */
+export function exhume(bytes: Uint8Array, fileName?: string): Exhumed {
+  if (bytes.length > MAX_FILE_SIZE) {
+    throw new ExhumeError(`file size ${bytes.length} exceeds limit ${MAX_FILE_SIZE}`);
+  }
   const module = identify(bytes, fileName);
   if (!module) {
-    throw new ExhumeError('unknown format');
+    throw new ExhumeError('unrecognised format: no decoder is confident about these bytes');
   }
+  return { module, specimen: decodeWith(module, bytes) };
+}
+
+/** Decode with a known module, converting any stray error into ExhumeError. */
+export function decodeWith(module: FormatModule, bytes: Uint8Array): Specimen {
   try {
     return module.decode(bytes);
   } catch (err) {
@@ -75,7 +91,3 @@ export function dispatch(
   }
 }
 
-// Export current modules count for testing
-export function getModuleCount(): number {
-  return modules.length;
-}

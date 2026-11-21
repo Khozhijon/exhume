@@ -262,4 +262,70 @@ describe('ByteReader', () => {
       expect(reader.remaining).toBe(1);
     });
   });
+
+  describe('u32le', () => {
+    it('reads 0xFFFFFFFF correctly (unsigned)', () => {
+      const reader = new ByteReader(new Uint8Array([0xff, 0xff, 0xff, 0xff]));
+      expect(reader.u32le('value')).toBe(0xffffffff);
+    });
+
+    it('reads 0x80000000 correctly (unsigned)', () => {
+      const reader = new ByteReader(new Uint8Array([0x00, 0x00, 0x00, 0x80]));
+      expect(reader.u32le('value')).toBe(0x80000000);
+    });
+  });
+
+  describe('u32be', () => {
+    it('reads 0xFFFFFFFF correctly (unsigned)', () => {
+      const reader = new ByteReader(new Uint8Array([0xff, 0xff, 0xff, 0xff]));
+      expect(reader.u32be('value')).toBe(0xffffffff);
+    });
+
+    it('reads 0x80000000 correctly (unsigned)', () => {
+      const reader = new ByteReader(new Uint8Array([0x80, 0x00, 0x00, 0x00]));
+      expect(reader.u32be('value')).toBe(0x80000000);
+    });
+  });
+
+  describe('nullString', () => {
+    it('handles unterminated string at end of buffer', () => {
+      const reader = new ByteReader(new Uint8Array([0x41, 0x42, 0x43]));
+      const result = reader.nullString('str', 10);
+      expect(result).toBe('ABC');
+      expect(reader.offset).toBe(3);
+    });
+
+    it('respects maxLen without NUL terminator', () => {
+      const reader = new ByteReader(new Uint8Array([0x41, 0x42, 0x43, 0x44]));
+      const result = reader.nullString('str', 2);
+      expect(result).toBe('AB');
+      expect(reader.offset).toBe(2);
+      // Next byte should still be readable
+      expect(reader.u8('next')).toBe(0x43);
+    });
+  });
+
+  describe('bytes', () => {
+    it('throws on negative n', () => {
+      const reader = new ByteReader(new Uint8Array([0x01, 0x02]));
+      expect(() => reader.bytes(-1, 'data')).toThrow(ExhumeError);
+    });
+
+    it('throws on non-integer n', () => {
+      const reader = new ByteReader(new Uint8Array([0x01, 0x02]));
+      expect(() => reader.bytes(1.5, 'data')).toThrow(ExhumeError);
+    });
+  });
+
+  describe('skip', () => {
+    it('throws on negative n', () => {
+      const reader = new ByteReader(new Uint8Array([0x01, 0x02]));
+      expect(() => reader.skip(-1, 'padding')).toThrow(ExhumeError);
+    });
+
+    it('throws on non-integer n', () => {
+      const reader = new ByteReader(new Uint8Array([0x01, 0x02]));
+      expect(() => reader.skip(1.5, 'padding')).toThrow(ExhumeError);
+    });
+  });
 });

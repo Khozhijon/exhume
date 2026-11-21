@@ -81,7 +81,7 @@ export class ByteReader {
     const b2 = this.buffer[start + 2]!;
     const b3 = this.buffer[start + 3]!;
     this.offset_ += 4;
-    const value = b0 | (b1 << 8) | (b2 << 16) | (b3 << 24);
+    const value = (b0 | (b1 << 8) | (b2 << 16) | (b3 << 24)) >>> 0;
     this.annotate(label, start, `0x${value.toString(16).toUpperCase().padStart(8, '0')} (${value})`);
     return value;
   }
@@ -94,7 +94,7 @@ export class ByteReader {
     const b1 = this.buffer[start + 2]!;
     const b0 = this.buffer[start + 3]!;
     this.offset_ += 4;
-    const value = (b3 << 24) | (b2 << 16) | (b1 << 8) | b0;
+    const value = ((b3 << 24) | (b2 << 16) | (b1 << 8) | b0) >>> 0;
     this.annotate(label, start, `0x${value.toString(16).toUpperCase().padStart(8, '0')} (${value})`);
     return value;
   }
@@ -149,6 +149,9 @@ export class ByteReader {
   }
 
   bytes(n: number, label: string): Uint8Array {
+    if (!Number.isInteger(n) || n < 0) {
+      throw new ExhumeError(`bytes: n must be a non-negative integer, got ${n}`);
+    }
     this.assertRemaining(n);
     const start = this.offset_;
     const result = this.buffer.subarray(start, this.offset_ + n);
@@ -168,19 +171,24 @@ export class ByteReader {
     let end = start;
     while (end < start + max && end < this.buffer.length) {
       if (this.buffer[end] === 0) {
-        break;
+        this.offset_ = end + 1;
+        const content = this.buffer.subarray(start, end);
+        let text = '';
+        for (let i = 0; i < content.length; i++) {
+          text += String.fromCharCode(content[i]!);
+        }
+        this.annotate(label, start, `"${text}"`);
+        return text;
       }
       end++;
     }
-    this.offset_ = end + 1; // Consume the null terminator if found
-
-    // Get string content
+    // No NUL found - stop at max or end, do NOT consume anything past content
+    this.offset_ = end;
     const content = this.buffer.subarray(start, end);
     let text = '';
     for (let i = 0; i < content.length; i++) {
       text += String.fromCharCode(content[i]!);
     }
-
     this.annotate(label, start, `"${text}"`);
     return text;
   }
@@ -219,6 +227,9 @@ export class ByteReader {
   }
 
   skip(n: number, label: string): void {
+    if (!Number.isInteger(n) || n < 0) {
+      throw new ExhumeError(`skip: n must be a non-negative integer, got ${n}`);
+    }
     this.assertRemaining(n);
     const start = this.offset_;
     this.offset_ += n;
@@ -232,6 +243,42 @@ export class ByteReader {
       );
     }
     this.offset_ = offset;
+  }
+
+  /** Look at a byte without consuming it or recording an annotation. Undefined when out of range. */
+  peek(at: number = this.offset_): number | undefined {
+    return at >= 0 && at < this.buffer.length ? this.buffer[at] : undefined;
+  }
+
+  /** Read n bytes as text through a code page function and record the decoded text as the value. */
+  text(n: number, label: string, decode: (byte: number) => string): string {
+    if (!Number.isInteger(n) || n < 0) {
+      throw new ExhumeError(`text: n must be a non-negative integer, got ${n}`);
+    }
+    this.assertRemaining(n);
+    const start = this.offset_;
+    let out = '';
+    for (let i = 0; i < n; i++) out += decode(this.buffer[start + i]!);
+    this.offset_ += n;
+    this.annotate(label, start, JSON.stringify(out.length > 60 ? out.slice(0, 60) + '...' : out));
+    return out;
+  }
+
+  /**
+   * Record an annotation for a span the decoder consumed by other means (for example a compressed
+   * run decoded by a codec). Moves the cursor to `end`.
+   */
+  mark(label: string, start: number, end: number, value?: string): void {
+    if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end < start || end > this.buffer.length) {
+      throw new ExhumeError(`mark: span ${start}..${end} is outside the file (size ${this.buffer.length})`);
+    }
+    this.offset_ = end;
+    this.annotate(label, start, value);
+  }
+
+  /** The whole underlying buffer (for codecs that need random access). */
+  get buffer_(): Uint8Array {
+    return this.buffer;
   }
 
   annotations(): Annotation[] {
