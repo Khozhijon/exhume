@@ -1,0 +1,47 @@
+.specimen { max-width: 1240px; margin: 0 auto; padding: 18px 20px 60px; animation: rise 0.7s ease-out both; }
+
+.specimen-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; padding-bottom: 14px; border-bottom: 1px solid rgba(232, 228, 216, 0.14); }
+.specimen-id { flex: 1 1 260px; min-width: 0; }
+.specimen-id h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); overflow-wrap: anywhere; }
+.specimen-id p { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.chip-format { color: var(--ember); border-color: rgba(255, 122, 26, 0.55); }
+
+.export-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.export-label { font-family: var(--serif); font-style: italic; color: var(--bone-dim); }
+.export-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
+.export-note { flex-basis: 100%; margin: 0; min-height: 1.2em; font-size: 0.82rem; color: var(--moss); text-align: right; }
+
+.tabs { display: flex; gap: 4px; margin-top: 14px; border-bottom: 1px solid rgba(232, 228, 216, 0.14); overflow-x: auto; }
+.tab {
+  padding: 0.6em 1.1em; border: 0; border-bottom: 2px solid transparent; background: none;
+  color: var(--bone-dim); font-family: var(--serif); font-size: 1.1rem; white-space: nowrap;
+}
+.tab:hover { color: var(--bone); }
+.tab[aria-selected="true"] { color: var(--bone); border-bottom-color: var(--ember); }
+
+.panel { padding-top: 20px; }
+
+.viewer-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 14px; }
+.viewer-image { display: flex; flex-direction: column; align-items: flex-start; }
+.viewer-image .frame { max-width: 100%; }
+.viewer-image .frame-body { overflow: auto; max-height: 78vh; }
+.viewer-image canvas { display: block; image-rendering: pixelated; image-rendering: crisp-edges; }
+.palette { display: flex; flex-wrap: wrap; gap: 0; margin-top: 12px; max-width: 512px; border: 1px solid rgba(232, 228, 216, 0.2); }
+.palette span { width: 16px; height: 12px; }
+
+/* ---------- coroner's report ---------- */
+.coroner { max-width: 760px; }
+.coroner h2 { font-size: 1.6rem; }
+.coroner-clean { color: var(--moss); }
+.coroner-list { padding-left: 1.3em; }
+.coroner-list li { margin: 0.45em 0; }
+.coroner-list .btn { padding: 0.1em 0.5em; font-size: 0.8rem; color: var(--ember); }
+.coroner-facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin: 22px 0 0; }
+.coroner-facts div { padding: 8px 10px; border: 1px solid rgba(232, 228, 216, 0.14); border-radius: var(--radius); }
+.coroner-facts dt { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--bone-dim); }
+.coroner-facts dd { margin: 0; font-family: var(--mono); }
+.coroner-dots { color: var(--bone-dim); font-size: 0.85rem; }
+
+@media (max-width: 640px) {
+  .export-note { text-align: left; }
+}
