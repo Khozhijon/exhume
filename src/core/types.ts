@@ -108,6 +108,8 @@ export interface SpecimenMeta {
   width?: number;
   height?: number;
   bitsPerPixel?: number;
+  /** Amiga ILBM: bit planes stored in the file (bitsPerPixel describes the decoded payload) */
+  bitPlanes?: number;
   /** Sheets */
   rowCount?: number;
   colCount?: number;

@@ -54,3 +54,11 @@
 .crt td.sel { background: var(--phosphor); color: #020a04; text-shadow: none; }
 .crt td.formula { color: #b8ffd0; }
 .crt td.sel, .crt td.sel.formula { color: #020a04; }
+/* A selected label that runs on over empty cells: dark on the pointer, phosphor beyond it.
+   The phosphor copy lies underneath (invisible on the pointer's own phosphor background). */
+.crt td.sel.spill { position: relative; }
+.crt td.sel.spill .spill-in { display: block; overflow: hidden; position: relative; z-index: 1; margin-right: -0.5ch; }
+.crt td.sel.spill .spill-out {
+  position: absolute; top: 0; left: 0.5ch; white-space: pre; color: var(--phosphor);
+  text-shadow: 0 0 6px rgba(125, 255, 155, 0.45); pointer-events: none;
+}

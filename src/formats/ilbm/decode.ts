@@ -73,6 +73,6 @@ export function decode(bytes: Uint8Array): Specimen {
     payload,
     annotations: r.annotations(),
     warnings,
-    meta: { width, height, bitsPerPixel: payload.bitsPerPixel },
+    meta: { width, height, bitsPerPixel: payload.bitsPerPixel, bitPlanes: nPlanes },
   };
 }

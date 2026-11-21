@@ -122,6 +122,12 @@ main:focus { outline: none; }
 .fog.two { bottom: 6vh; opacity: 0.6; animation-duration: 110s; animation-direction: alternate-reverse; }
 @keyframes drift { from { transform: translateX(-8%); } to { transform: translateX(8%); } }
 
+/* On a phone the moon sits small in the corner, clear of the title and the tombstones. */
+@media (max-width: 640px) {
+  .moon { top: 14px; right: 14px; width: 54px; height: 54px; opacity: 0.85;
+    box-shadow: 0 0 30px 8px rgba(240, 232, 200, 0.14), 0 0 80px 30px rgba(240, 232, 200, 0.06); }
+}
+
 @keyframes rise {
   from { opacity: 0; transform: translateY(28px); }
   to { opacity: 1; transform: translateY(0); }

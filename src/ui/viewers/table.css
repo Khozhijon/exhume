@@ -180,3 +180,10 @@
 .viewer-table .table-content tr.row-deleted.sel td { color: #5a4a00; }
 .viewer-table .crt-status { background: var(--dbase-bar); color: #0a0f5a; }
 .viewer-table .table-content td, .viewer-table .table-content th { padding-left: 8px; padding-right: 8px; }
+/* Never squeeze the columns: on a narrow screen the table keeps its width and the pane scrolls sideways. */
+.viewer-table .table-content { width: max-content; min-width: 100%; }
+/* On a phone the status bar keeps the mode and the record counter; the drive and file name are in the title above. */
+@media (max-width: 560px) {
+  .viewer-table .crt-status span { flex-shrink: 0; }
+  .viewer-table .crt-status span:nth-child(2), .viewer-table .crt-status span:nth-child(3) { display: none; }
+}

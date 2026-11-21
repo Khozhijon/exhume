@@ -75,6 +75,11 @@
 .privacy-notice p strong { color: var(--bone); font-weight: 600; }
 .privacy-notice .offline-ready { color: var(--moss); font-weight: 500; }
 
+@media (max-width: 640px) {
+  .colophon { grid-template-columns: 1fr; gap: 16px; }
+  .privacy-notice { text-align: left; }
+}
+
 /* ---------- exhuming overlay ---------- */
 .exhuming {
   position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; text-align: center;

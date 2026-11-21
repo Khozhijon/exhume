@@ -142,7 +142,13 @@ export function SheetViewer({ payload, fileName }: SheetViewerProps) {
                         className={cellClass(cell, on, spill)}
                         onClick={() => setSel({ row: r, col: c })}
                       >
-                        {cell ? display(cell) : ''}
+                        {cell && on && spill ? (
+                          // the pointer inverts only its own cell; the rest of the label keeps its colour
+                          <>
+                            <span className="spill-in">{display(cell)}</span>
+                            <span className="spill-out" aria-hidden="true">{display(cell)}</span>
+                          </>
+                        ) : cell ? display(cell) : ''}
                       </td>
                     );
                   })}
