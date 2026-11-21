@@ -37,7 +37,7 @@ export function exportTargets(payload: SpecimenPayload): ExportTarget[] {
 
 export { encodePng, crc32 } from './png.js';
 export { toCsv, parseCsv, sheetToRows, tableToRows } from './csv.js';
-export { toXlsx, escapeXml, columnName, cellRef } from './xlsx.js';
+export { toXlsx, escapeXml, columnName, cellRef, lotusNumberFormat } from './xlsx.js';
 export type { XlsxOptions } from './xlsx.js';
 export { toJson, autopsyToJson, toBase64 } from './json.js';
 export { toMarkdown, toHtml, toPlainText } from './document.js';

@@ -36,9 +36,50 @@ export function cellRef(col: number, row: number): string {
 
 type Val = string | number | boolean | null | undefined;
 
-function valueCell(ref: string, v: Val, formula?: string): string {
+/** Number formats used by the sheet. Index 0 is General; custom formats get ids from 164 up. */
+class Styles {
+  private readonly codes: string[] = [];
+  /** Style index (for the `s` attribute) of a number format code; 0 when there is none. */
+  index(code: string | null): number {
+    if (!code) return 0;
+    let i = this.codes.indexOf(code);
+    if (i < 0) i = this.codes.push(code) - 1;
+    return i + 1;
+  }
+  xml(): string {
+    const fmts = this.codes.map((c, i) => `<numFmt numFmtId="${164 + i}" formatCode="${escapeXml(c)}"/>`).join('');
+    const xfs = this.codes.map((_, i) => `<xf numFmtId="${164 + i}" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>`).join('');
+    return `${this.codes.length ? `<numFmts count="${this.codes.length}">${fmts}</numFmts>` : ''}<fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="${this.codes.length + 1}"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>${xfs}</cellXfs>`;
+  }
+}
+
+/**
+ * The Excel number format for a 1-2-3 cell format, so currency, percent and date cells look in Excel
+ * the way they did in 1-2-3. Lotus date serials and Excel date serials count the same days (both
+ * include the non-existent 29 February 1900), so date cells only need a date format.
+ */
+export function lotusNumberFormat(format: { type: number; decimals: number }): string | null {
+  const d = Math.max(0, Math.min(15, format.decimals));
+  const places = d > 0 ? `.${'0'.repeat(d)}` : '';
+  switch (format.type) {
+    case 0: return `0${places}`;
+    case 1: return `0${places}E+00`;
+    case 2: return `"$"#,##0${places};("$"#,##0${places})`;
+    case 3: return `0${places}%`;
+    case 4: return `#,##0${places};(#,##0${places})`;
+    case 7:
+      return (
+        { 2: 'd-mmm-yy', 3: 'd-mmm', 4: 'mmm-yy', 7: 'h:mm:ss AM/PM', 8: 'h:mm AM/PM', 9: 'mm/dd/yy', 10: 'mm/dd', 11: 'hh:mm:ss', 12: 'hh:mm' }[d] ?? null
+      );
+    default:
+      return null;
+  }
+}
+
+function valueCell(ref: string, v: Val, formula?: string, style = 0): string {
   const f = formula === undefined ? '' : `<f>${escapeXml(formula)}</f>`;
-  if (typeof v === 'number' && Number.isFinite(v)) return `<c r="${ref}">${f}<v>${v}</v></c>`;
+  const st = style > 0 ? ` s="${style}"` : '';
+  if (typeof v === 'number' && Number.isFinite(v)) return `<c r="${ref}"${st}>${f}<v>${v}</v></c>`;
   if (typeof v === 'boolean') return `<c r="${ref}" t="b">${f}<v>${v ? 1 : 0}</v></c>`;
   if (v === null || v === undefined) return f ? `<c r="${ref}">${f}</c>` : '';
   const text = String(v);
@@ -47,6 +88,7 @@ function valueCell(ref: string, v: Val, formula?: string): string {
 }
 
 interface Built {
+  styles: Styles;
   rows: Map<number, Map<number, string>>;
   widths: Map<number, number>;
   maxCol: number;
@@ -63,7 +105,7 @@ function addCell(b: Built, col: number, row: number, xml: string): void {
 }
 
 function buildSheet(payload: SheetPayload, opts: XlsxOptions, warnings: string[]): Built {
-  const b: Built = { rows: new Map(), widths: new Map(), maxCol: 0, maxRow: 0 };
+  const b: Built = { styles: new Styles(), rows: new Map(), widths: new Map(), maxCol: 0, maxRow: 0 };
   const warned = new Set<string>();
   for (const c of payload.cells) {
     const ref = cellRef(c.col, c.row);
@@ -76,7 +118,8 @@ function buildSheet(payload: SheetPayload, opts: XlsxOptions, warnings: string[]
         warnings.push(`Formula "${c.formula}" (first at ${ref}) has no Excel equivalent; the cached value was stored instead.`);
       }
     }
-    addCell(b, c.col, c.row, valueCell(ref, c.value, formula));
+    const style = typeof c.value === 'number' ? b.styles.index(lotusNumberFormat(c.format)) : 0;
+    addCell(b, c.col, c.row, valueCell(ref, c.value, formula, style));
   }
   for (const [k, w] of Object.entries(payload.columnWidths)) {
     const col = Number(k);
@@ -86,7 +129,7 @@ function buildSheet(payload: SheetPayload, opts: XlsxOptions, warnings: string[]
 }
 
 function buildTable(payload: TablePayload): Built {
-  const b: Built = { rows: new Map(), widths: new Map(), maxCol: 0, maxRow: 0 };
+  const b: Built = { styles: new Styles(), rows: new Map(), widths: new Map(), maxCol: 0, maxRow: 0 };
   payload.fields.forEach((f, col) => {
     addCell(b, col, 0, valueCell(cellRef(col, 0), f.name));
     b.widths.set(col, Math.min(60, Math.max(f.name.length, f.length, 4) + 2));
@@ -94,7 +137,11 @@ function buildTable(payload: TablePayload): Built {
   let row = 1;
   for (const rec of payload.records) {
     if (rec.deleted) continue;
-    payload.fields.forEach((_, col) => addCell(b, col, row, valueCell(cellRef(col, row), rec.values[col])));
+    payload.fields.forEach((f, col) => {
+      const v = rec.values[col];
+      const fixed = (f.type === 'N' || f.type === 'F') && f.decimals > 0 ? b.styles.index(`0.${'0'.repeat(Math.min(15, f.decimals))}`) : 0;
+      addCell(b, col, row, valueCell(cellRef(col, row), v, undefined, typeof v === 'number' ? fixed : 0));
+    });
     row++;
   }
   return b;
@@ -140,7 +187,7 @@ export function toXlsx(
       `${X}<Relationships xmlns="${PKG_REL}"><Relationship Id="rId1" Type="${NS_REL}/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="${NS_REL}/styles" Target="styles.xml"/></Relationships>`,
     ),
     'xl/styles.xml': strToU8(
-      `${X}<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs></styleSheet>`,
+      `${X}<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">${built.styles.xml()}</styleSheet>`,
     ),
     'xl/worksheets/sheet1.xml': strToU8(sheetXml(built)),
   };

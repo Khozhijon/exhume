@@ -5,7 +5,7 @@ import { toXlsx, escapeXml, cellRef } from './xlsx.js';
 import type { SheetCell, SheetPayload, TablePayload } from '../core/types.js';
 
 const text = fc.string({ unit: fc.constantFrom('a', 'Q', ' ', '<', '>', '&', '"', "'", '\n', 'é', '\u0001', '9'), maxLength: 10 });
-const fmt = { type: 0, decimals: 0, protected: false };
+const fmt = { type: 7, decimals: 15, protected: false }; // 1-2-3 "default" format: no Excel number format
 
 const sheetArb = fc
   .array(

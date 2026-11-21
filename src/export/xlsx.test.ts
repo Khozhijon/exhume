@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { unzipSync, strFromU8 } from 'fflate';
-import { toXlsx, escapeXml, columnName } from './xlsx.js';
+import { toXlsx, escapeXml, columnName, lotusNumberFormat } from './xlsx.js';
 import type { SheetCell, SheetPayload, TablePayload } from '../core/types.js';
 
-const fmt = { type: 0, decimals: 0, protected: false };
+const fmt = { type: 7, decimals: 15, protected: false }; // 1-2-3 "default" format: no Excel number format
 const cell = (col: number, row: number, value: SheetCell['value'], type: SheetCell['type'], formula?: string): SheetCell => ({
   col, row, type, value, formula, format: fmt,
 });
@@ -83,5 +83,40 @@ describe('toXlsx table', () => {
     expect(xml).not.toContain('Gone');
     expect(xml).toContain('<c r="B3" t="b"><v>0</v></c>');
     expect(xml).not.toContain('r="A3"');
+  });
+});
+
+describe('xlsx number formats (reviewer addition)', () => {
+  const fmt = { type: 2, decimals: 2, protected: false };
+  const sheet: SheetPayload = {
+    kind: 'sheet', version: '2', columnWidths: {}, names: [],
+    cells: [
+      { col: 0, row: 0, type: 'number', value: 1234.5, format: fmt },
+      { col: 1, row: 0, type: 'integer', value: 32081, format: { type: 7, decimals: 2, protected: false } },
+      { col: 2, row: 0, type: 'number', value: 0.25, format: { type: 3, decimals: 1, protected: false } },
+      { col: 3, row: 0, type: 'number', value: 7, format: { type: 7, decimals: 15, protected: false } },
+      { col: 4, row: 0, type: 'label', value: 'text', align: 'left', format: fmt },
+    ],
+  };
+  it('maps 1-2-3 formats to Excel format codes', () => {
+    expect(lotusNumberFormat({ type: 2, decimals: 2 })).toBe('"$"#,##0.00;("$"#,##0.00)');
+    expect(lotusNumberFormat({ type: 0, decimals: 0 })).toBe('0');
+    expect(lotusNumberFormat({ type: 3, decimals: 1 })).toBe('0.0%');
+    expect(lotusNumberFormat({ type: 7, decimals: 2 })).toBe('d-mmm-yy');
+    expect(lotusNumberFormat({ type: 7, decimals: 1 })).toBeNull();
+    expect(lotusNumberFormat({ type: 7, decimals: 15 })).toBeNull();
+  });
+  it('writes one style per distinct format and points number cells at it', () => {
+    const files = unzipSync(toXlsx(sheet).bytes);
+    const styles = strFromU8(files['xl/styles.xml']!);
+    const xml = strFromU8(files['xl/worksheets/sheet1.xml']!);
+    expect(styles).toContain('<numFmts count="3">');
+    expect(styles).toContain('formatCode="d-mmm-yy"');
+    expect(styles).toContain('<cellXfs count="4">');
+    expect(xml).toContain('<c r="A1" s="1"><v>1234.5</v></c>');
+    expect(xml).toContain('<c r="B1" s="2"><v>32081</v></c>');
+    expect(xml).toContain('<c r="C1" s="3"><v>0.25</v></c>');
+    expect(xml).toContain('<c r="D1"><v>7</v></c>');
+    expect(xml).toContain('<c r="E1" t="inlineStr">');
   });
 });
