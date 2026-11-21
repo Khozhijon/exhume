@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Exhume: built with Kiro</title>
+<style>
+  :root { --night:#0b0d12; --bone:#e8e4d8; --dim:#b4b0a4; --ember:#ff7a1a; --phosphor:#7dff9b; --stone:#8a8f98;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif; --mono:ui-monospace,"SF Mono",Menlo,monospace; --sans:system-ui,-apple-system,sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background: linear-gradient(180deg,#07080c,#0b0d12 45%,#131722); color:var(--bone); font-family:var(--sans); overflow:hidden; }
+  section { position:absolute; inset:0; padding:38px 54px; display:none; flex-direction:column; }
+  body[data-slide="spec"] #spec, body[data-slide="kiro"] #kiro, body[data-slide="honest"] #honest, body[data-slide="end"] #end { display:flex; }
+  h1 { font-family:var(--serif); font-weight:400; font-size:44px; margin:0 0 6px; }
+  h1 em { color:var(--ember); font-style:normal; }
+  .sub { color:var(--dim); font-size:19px; margin:0 0 22px; }
+  .cols { display:grid; gap:18px; flex:1; min-height:0; }
+  .c3 { grid-template-columns:repeat(3,1fr); } .c2 { grid-template-columns:1fr 1fr; } .c4 { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+  .card { border:1px solid rgba(232,228,216,.18); border-radius:8px; background:#07090d; padding:16px 18px; overflow:hidden; display:flex; flex-direction:column;
+    opacity:.0; transform:translateY(14px); transition:opacity .6s, transform .6s; }
+  .card.on { opacity:1; transform:none; }
+  .card h2 { font-family:var(--serif); font-weight:400; font-size:25px; margin:0 0 4px; color:var(--bone); }
+  .card .path { font-family:var(--mono); font-size:13px; color:var(--ember); margin:0 0 10px; }
+  pre { font-family:var(--mono); font-size:13.5px; line-height:1.5; white-space:pre-wrap; margin:0; color:#cfd3da; }
+  pre b { color:var(--phosphor); font-weight:400; } pre i { color:var(--ember); font-style:normal; } pre s { color:#6c7280; text-decoration:none; }
+  .count { display:flex; gap:44px; justify-content:center; padding-top:18px; font-family:var(--serif); font-size:26px; color:var(--dim); }
+  .count b { color:var(--ember); font-weight:400; font-size:40px; margin-right:8px; }
+  table { width:100%; border-collapse:collapse; font-size:15px; }
+  th { text-align:left; color:var(--dim); font-weight:500; font-size:12.5px; text-transform:uppercase; letter-spacing:.08em; padding:5px 8px; border-bottom:1px solid rgba(232,228,216,.25); }
+  td { padding:6px 8px; border-bottom:1px solid rgba(232,228,216,.08); }
+  td.n, th.n { text-align:right; font-family:var(--mono); }
+  td.m { font-family:var(--mono); font-size:13px; color:var(--dim); }
+  tr.bad td.n { color:#ff9a8a; } tr.good td.n { color:var(--phosphor); }
+  ul { margin:0; padding-left:1.1em; font-size:16.5px; line-height:1.55; } li { margin:2px 0; }
+  .big { font-family:var(--serif); font-size:22px; line-height:1.45; }
+  #end { align-items:center; justify-content:center; text-align:center; }
+  #end h1 { font-size:150px; letter-spacing:.04em; margin:0; }
+  #end .tag { font-family:var(--serif); font-style:italic; font-size:36px; color:var(--dim); margin:6px 0 34px; }
+  #end .facts { font-size:21px; color:var(--bone); } #end .small { margin-top:30px; font-size:15px; color:var(--dim); line-height:1.7; }
+</style>
+</head>
+<body data-slide="spec">
+
+<section id="spec">
+  <h1>Built <em>spec first</em>, with Kiro</h1>
+  <p class="sub">One Kiro session in spec mode turned a two-page brief into the contract for all the code. <span style="font-family:var(--mono);font-size:15px;color:var(--ember)">.kiro/specs/exhume-core/</span></p>
+  <div class="cols c3">
+    <div class="card" data-step="1"><h2>requirements.md</h2><p class="path">EARS acceptance criteria</p>
+<pre><s>### Requirement 2: MacPaint Decoder</s>
+
+4. <i>WHEN</i> decoding the bitmap, <i>THE SYSTEM SHALL</i>
+   apply PackBits row by row ...
+
+6. <i>IF</i> the compressed input is exhausted
+   before 51 840 bytes are produced,
+   <i>THEN THE SYSTEM SHALL</i> fill remaining
+   pixels with white (0) <b>and add a warning</b>.
+
+<s>### Requirement 8: Damaged Input</s>
+
+2. <i>WHEN</i> decoding any prefix of a valid
+   encoded file, <i>THE SYSTEM SHALL</i> return
+   either a Specimen or throw ExhumeError;
+   it <b>SHALL NOT hang</b>.</pre></div>
+    <div class="card" data-step="2"><h2>design.md</h2><p class="path">numbered correctness properties</p>
+<pre><s>### Property 1: Format round-trip</s>
+<b>For any</b> valid model m, decode(encode(m))
+produces a payload that deep-equals m.
+
+<s>### Property 3: Annotation honesty</s>
+<b>For any</b> file produced by encode, the
+top-level annotations cover every byte
+index <b>exactly once</b>: no index appears in
+two annotations, none is absent.
+<i>Validates: Requirements 9.3, 9.6</i>
+
+<s>### Property 8: Lotus formula round-trip</s>
+<b>For any</b> generated formula tree: compile,
+decompile, compile again is stable.</pre></div>
+    <div class="card" data-step="3"><h2>tasks.md</h2><p class="path">each task traces to requirements</p>
+<pre>- [x] 5. MacPaint format module
+  - decode.ts: MacBinary wrapper, 512-byte
+    header, 720 PackBits rows
+  - encode.ts, index.ts, example tests
+  - [x]* 5.1 Write property tests <b>P1-P4</b>
+  - <i>_Requirements: 2.1, 2.2, 2.3, 2.4,
+    2.5, 8.1, 8.2, 8.3, 8.4, 9.1_</i>
+
+- [x] 10. Lotus WK1: formula decompiler
+          and Excel translator
+  - [x]* 10.1 Property test <b>P8</b>
+  - <i>_Requirements: 6.6, 6.7_</i></pre></div>
+  </div>
+  <div class="count card" data-step="4" style="flex-direction:row;border:0;background:none">
+    <span><b>23</b>requirements</span><span><b>12</b>correctness properties</span><span><b>26</b>tasks</span>
+  </div>
+</section>
+
+<section id="kiro">
+  <h1>Steering, hooks, MCP, agents: <em>all in the loop</em></h1>
+  <p class="sub">The whole <span style="font-family:var(--mono);font-size:16px;color:var(--ember)">.kiro/</span> directory is in the repository, with a transcript of every Kiro session.</p>
+  <div class="cols c4">
+    <div class="card" data-step="1"><h2>Steering</h2><p class="path">.kiro/steering/product.md</p>
+      <ul><li><b style="color:var(--phosphor)">Private.</b> Files are decoded on the user's device. Nothing is uploaded.</li>
+      <li><b style="color:var(--phosphor)">Honest.</b> Exhume never invents content. Damage becomes a visible warning.</li>
+      <li><b style="color:var(--phosphor)">Never crashes</b> on bad input: a specimen, or a clear error.</li></ul></div>
+    <div class="card" data-step="2"><h2>Agent hooks</h2><p class="path">.kiro/hooks/ &middot; runs counted from the transcripts</p>
+      <table><tr><th>hook</th><th>trigger</th><th class="n">runs</th></tr>
+      <tr><td>Shell guard</td><td class="m">PreToolUse</td><td class="n">110</td></tr>
+      <tr><td>Guard the promises</td><td class="m">PostFileSave</td><td class="n">74</td></tr>
+      <tr><td>Test what was touched</td><td class="m">PostFileSave</td><td class="n">25</td></tr>
+      <tr><td>Session brief / No red on stop</td><td class="m">SessionStart / Stop</td><td class="n">12</td></tr></table></div>
+    <div class="card" data-step="3"><h2>MCP: exhume-mcp</h2><p class="path">the project's own decoders as tools &middot; from a Kiro transcript</p>
+<pre>[tool] <b>@exhume/identify</b> {"path":"public/samples/LETTER.WS"}
+[tool] <b>@exhume/autopsy</b>  {"path":"public/samples/LETTER.WS",
+                         "maxDepth":2}
+[tool] <b>@exhume/hexdump</b>  {"path":"public/samples/LETTER.WS",
+                         "length":256}
+<i>Soft carriage return (8D 0A): present at 0x98-0x99.</i></pre></div>
+    <div class="card" data-step="4"><h2>Custom agents</h2><p class="path">.kiro/agents/</p>
+      <ul><li><b style="color:var(--ember)">gravedigger</b> implements one spec task: code, example tests, property tests, checks.</li>
+      <li><b style="color:var(--ember)">coroner</b> reviews against the spec and may not edit the source.</li></ul></div>
+  </div>
+</section>
+
+<section id="honest">
+  <h1>Fifty free credits, and <em>every one accounted for</em></h1>
+  <p class="sub">Kiro CLI on the free tier. Each session is a prompt file in, a transcript with its cost out, a review next to it.</p>
+  <div class="cols c2">
+    <div class="card" data-step="1"><h2>What each Kiro session cost</h2><p class="path">docs/kiro-sessions/ &middot; docs/KIRO.md</p>
+      <table><tr><th>session</th><th>model</th><th class="n">credits</th></tr>
+      <tr><td>Spec: requirements, design, tasks</td><td class="m">auto</td><td class="n">9.8</td></tr>
+      <tr class="bad"><td>Scaffold</td><td class="m">qwen3-coder-next</td><td class="n">4.6</td></tr>
+      <tr class="bad"><td>ByteReader / ByteWriter</td><td class="m">qwen3-coder-next</td><td class="n">8.9</td></tr>
+      <tr class="bad"><td>PackBits, MCP skeleton</td><td class="m">qwen3-coder-next</td><td class="n">10.0</td></tr>
+      <tr class="good"><td>Table Viewer</td><td class="m">claude-haiku-4.5</td><td class="n">0.96</td></tr>
+      <tr class="good"><td>Document Viewer</td><td class="m">claude-haiku-4.5</td><td class="n">0.76</td></tr>
+      <tr class="good"><td>Samples generator</td><td class="m">claude-haiku-4.5</td><td class="n">5.4</td></tr>
+      <tr class="good"><td>Coroner review</td><td class="m">claude-haiku-4.5</td><td class="n">1.0</td></tr>
+      <tr class="good"><td>Offline + accessibility</td><td class="m">claude-haiku-4.5</td><td class="n">2.7</td></tr></table>
+      <p style="margin:10px 0 0;color:var(--dim);font-size:14.5px">Lesson: the cheapest model was the most expensive. Cost is steps &times; context.</p></div>
+    <div class="card" data-step="2"><h2>Who wrote what</h2><p class="path">README.md &middot; honest division of labour</p>
+      <p class="big" style="margin:4px 0 6px;color:var(--ember)">Kiro</p>
+      <ul><li>the spec: requirements, design, tasks</li><li>scaffold, ByteReader, ByteWriter, PackBits</li><li>samples generator, Table and Document viewers</li><li>offline + accessibility pass, a review as the coroner</li></ul>
+      <p class="big" style="margin:14px 0 6px;color:var(--phosphor)">Claude Code</p>
+      <ul><li>steering, hooks, agent definitions, format notes</li><li>the six format modules and the export layer, against Kiro's spec</li><li>app shell, sheet viewer, Autopsy</li><li>orchestration and a review of every Kiro run</li></ul></div>
+  </div>
+</section>
+
+<section id="end">
+  <h1>Exhume</h1>
+  <p class="tag">Raise your dead files.</p>
+  <p class="facts">Six dead formats &middot; 400 tests &middot; no server, no upload &middot; works offline &middot; MIT</p>
+  <p class="small">Built with Kiro and Claude Code for Kiroween 2026, category Resurrection.<br>
+  The narration is a synthesised voice (Chatterbox, open source). The sample files are original works made for this project.</p>
+</section>
+
+<script>
+  // The capture script drives this page: show(slide) then step(n) reveals cards 1..n.
+  window.show = (slide) => { document.body.dataset.slide = slide; document.querySelectorAll('.card').forEach((c) => c.classList.remove('on')); };
+  window.step = (n) => { document.querySelectorAll('#' + document.body.dataset.slide + ' .card').forEach((c) => { if (Number(c.dataset.step) <= n) c.classList.add('on'); }); };
+  if (location.hash) { const [s, n] = location.hash.slice(1).split(':'); window.show(s); window.step(Number(n || 9)); }
+</script>
+</body>
+</html>

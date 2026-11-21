@@ -4,3 +4,9 @@ mcp/dist/
 *.tsbuildinfo
 .DS_Store
 coverage/
+
+# demo video build products (scripts and narration text are kept)
+video/tts-cache/
+video/out/
+video/nar/*.wav
+video/frames/
