@@ -33,6 +33,12 @@
   ul { margin:0; padding-left:1.1em; font-size:16.5px; line-height:1.55; } li { margin:2px 0; }
   .big { font-family:var(--serif); font-size:22px; line-height:1.45; }
   #end { align-items:center; justify-content:center; text-align:center; }
+  /* The end card fades in, and a dot the colour of the background keeps the compositor producing frames:
+     the screencast only delivers a frame when the next one is drawn, so a still page would never be recorded. */
+  #end > * { animation: endin .8s ease-out both; }
+  @keyframes endin { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  body[data-slide="end"]::after { content:""; position:fixed; left:0; top:0; width:2px; height:2px; background:#07080c; animation: tick 1s linear infinite alternate; }
+  @keyframes tick { from { opacity:.2; } to { opacity:.9; } }
   #end h1 { font-size:150px; letter-spacing:.04em; margin:0; }
   #end .tag { font-family:var(--serif); font-style:italic; font-size:36px; color:var(--dim); margin:6px 0 34px; }
   #end .facts { font-size:21px; color:var(--bone); } #end .small { margin-top:30px; font-size:15px; color:var(--dim); line-height:1.7; }
