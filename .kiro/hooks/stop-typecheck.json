@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "No red on stop",
+      "description": "When the agent is about to stop, type-check the project. Type errors are sent back so the agent fixes them instead of finishing.",
+      "trigger": "Stop",
+      "action": { "type": "command", "command": "test -f tsconfig.json && test -d node_modules && npm run -s typecheck || true" },
+      "timeout": 60
+    }
+  ]
+}

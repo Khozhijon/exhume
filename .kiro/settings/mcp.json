@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "exhume": {
+      "command": "node",
+      "args": ["mcp/server.mjs"],
+      "disabled": false,
+      "autoApprove": ["hexdump", "identify", "autopsy", "decode"]
+    }
+  }
+}

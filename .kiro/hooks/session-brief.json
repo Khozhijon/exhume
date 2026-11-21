@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Session brief",
+      "description": "At session start, put the spec progress, the next open task and the working-tree state into the agent's context.",
+      "trigger": "SessionStart",
+      "action": { "type": "command", "command": "node scripts/hooks/session-brief.mjs" },
+      "timeout": 15
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "New format checklist",
+      "description": "When the agent creates a new format module entry point, remind it of the contract every format obeys.",
+      "trigger": "PostFileCreate",
+      "matcher": "^src/formats/[^/]+/index\\.ts$",
+      "action": {
+        "type": "agent",
+        "prompt": "A new format module was just created. Before you finish this task, confirm in your final message, one line each, that: (1) docs/formats/<id>.md was read and followed; (2) detect() cannot throw; (3) decode() reads only through ByteReader and groups its fields; (4) limits from src/core/limits.ts are checked before any allocation; (5) encode() exists; (6) property tests P1-P4 exist in <id>.prop.test.ts and pass; (7) the module is registered in src/core/registry.ts. Fix whatever is missing first."
+      }
+    }
+  ]
+}

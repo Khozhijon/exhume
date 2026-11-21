@@ -1,0 +1,13 @@
+# kiro-cli kiro-cli 3.5.0 run: smoke
+# model: qwen3-coder-next
+# extra args: 
+# prompt file: docs/kiro-sessions/prompts/00-smoke.md
+
+1. Steering: `product`, `structure`, `tech`
+2. Exhume is a file format resurrection project that decodes legacy files (MacPaint, Lotus 1-2-3, etc.) in the browser with no uploads.
+3. `read_file`, `fs_write`, `str_replace`, `execute_bash`, `tool_call`, `load_resource`, `invoke_sub_agent`, `web_fetch`
+# exit code: 0
+# credits after run:
+Estimated Usage | resets on 2026-12-01 | KIRO FREE
+Credits (0.00 of 50 covered in plan), 0.0%
+Manage your plan at https://app.kiro.dev/account/usage
