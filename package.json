@@ -11,7 +11,8 @@
     "build:core": "tsc -p tsconfig.core.json",
     "samples": "npm run -s build:core && node scripts/gen-samples.mjs",
     "mcp": "npm run -s build:core && node mcp/server.mjs",
-    "interop": "npm run -s build:core && node scripts/interop.mjs"
+    "interop": "npm run -s build:core && node scripts/interop.mjs",
+    "offline": "npm run -s build && node scripts/offline-check.mjs"
   },
   "dependencies": {
     "fflate": "^0.8.2",

@@ -87,6 +87,7 @@ npm run build     # static site in dist/
 npm run samples   # regenerate the built-in specimens
 npm run mcp       # start exhume-mcp on stdio
 npm run interop   # cross-check against ffmpeg's PCX and IFF codecs (needs ffmpeg)
+npm run offline   # build, visit once, cut the network, reload, open every sample (needs Playwright)
 ```
 
 ## Built with Kiro (and what was not)

@@ -144,7 +144,8 @@ and the rest was implemented with Claude Code against Kiro's spec.
 `ByteWriter` and their tests; the PackBits codec and its property tests; the first MCP server; the
 samples generator, its data models and tests; the Table Viewer; the Document Viewer component; the
 service worker, manifest and accessibility pass; the WordStar review. It also fixed one decoder bug it
-found along the way.
+found along the way. The service worker did not keep its promise on a first visit; that was found
+on the live site and fixed in review ([`reviews/task-25.md`](reviews/task-25.md)).
 
 **Claude Code wrote:** the brief, format notes, steering documents, hooks and agent definitions; the
 prompts and review notes for every Kiro session; the six format modules, the export layer and the
