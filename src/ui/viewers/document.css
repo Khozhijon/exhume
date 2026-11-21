@@ -1,0 +1,107 @@
+/* WordStar document on continuous fan-fold printer paper. CSS only (steering: ui.md).
+   Layout by the reviewer; component structure from spec task 18. */
+.viewer-document { display: flex; flex-direction: column; align-items: center; }
+.viewer-document .viewer-tools { align-self: flex-start; }
+
+.document-container { width: 100%; display: flex; justify-content: center; }
+
+/* ---------- paper ---------- */
+.fan-fold-wrap {
+  width: min(100%, 860px);
+  filter: drop-shadow(0 18px 40px rgba(0, 0, 0, 0.65));
+}
+
+.fan-fold-page {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  background-color: #f4f1e6;
+  /* faint green bars, one "inch" on, one off */
+  background-image: repeating-linear-gradient(180deg, rgba(74, 140, 96, 0.09) 0 48px, transparent 48px 96px);
+  color: #1c1b22;
+}
+
+.fan-fold-margin-left,
+.fan-fold-margin-right {
+  /* tractor-feed holes */
+  background-image: radial-gradient(circle at 50% 12px, #0b0d12 0 5px, rgba(0, 0, 0, 0.18) 5px 6px, transparent 6.5px);
+  background-size: 100% 24px;
+  background-repeat: repeat-y;
+  background-color: rgba(0, 0, 0, 0.025);
+}
+.fan-fold-margin-left { border-right: 1px dashed rgba(28, 27, 34, 0.28); }
+.fan-fold-margin-right { border-left: 1px dashed rgba(28, 27, 34, 0.28); }
+
+.fan-fold-content {
+  min-width: 0;
+  padding: 30px clamp(16px, 6%, 56px) 34px;
+  font-family: var(--mono);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.page-body { max-width: 72ch; margin: 0 auto; }
+.page-body p {
+  margin: 0 0 1.6em;
+  min-height: 1.6em;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+.page-body p:last-child { margin-bottom: 0; }
+
+/* dot-matrix emphasis: bold was struck twice, underline was a second pass */
+.fan-fold-content strong { font-weight: 700; text-shadow: 0.6px 0 0 currentColor; }
+.fan-fold-content u { text-decoration-thickness: 1.5px; text-underline-offset: 3px; }
+.fan-fold-content sup, .fan-fold-content sub { font-size: 0.72em; line-height: 0; }
+
+.running-header,
+.running-footer {
+  max-width: 72ch;
+  margin: 0 auto;
+  text-align: center;
+  color: #5a584f; /* 6.0:1 on the paper */
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.running-header { padding-bottom: 14px; margin-bottom: 22px; border-bottom: 1px solid rgba(28, 27, 34, 0.18); }
+.running-footer { padding-top: 14px; margin-top: 26px; border-top: 1px solid rgba(28, 27, 34, 0.18); }
+
+/* the perforation between two sheets */
+.page-break-separator {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 0;
+  border-top: 2px dashed rgba(28, 27, 34, 0.45);
+}
+.page-break-label {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -50%);
+  padding: 1px 10px;
+  background: #f4f1e6;
+  color: #5a584f;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(28, 27, 34, 0.3);
+  border-radius: 999px;
+}
+
+/* ---------- plain reading view ---------- */
+.plain-wrap {
+  width: min(100%, 72ch);
+  padding: 8px 4px 24px;
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: var(--bone);
+}
+.plain-wrap p { margin: 0 0 1.2em; min-height: 1.2em; white-space: pre-wrap; overflow-wrap: break-word; }
+.plain-page-break { margin: 2em 0; border-top: 1px dashed rgba(232, 228, 216, 0.4); }
+
+@media (max-width: 560px) {
+  .fan-fold-page { grid-template-columns: 20px minmax(0, 1fr) 20px; }
+  .fan-fold-content { font-size: 13px; padding: 20px 10px 24px; }
+  .fan-fold-margin-left, .fan-fold-margin-right { background-size: 100% 20px; }
+}

@@ -19,7 +19,7 @@ function detect(bytes: Uint8Array, fileName?: string): number {
 
 export const wk1: FormatModule = {
   id: 'wk1',
-  name: 'Lotus 1-2-3 worksheet',
+  name: 'Lotus 1-2-3',
   born: 1983,
   died: 1995,
   extensions: ['.wk1', '.wks'],

@@ -303,6 +303,20 @@ describe('ilbm errors', () => {
 });
 
 describe('ilbm encode', () => {
+  it('writes a 32-colour picture with 5 bit planes, as an Amiga would, and reads it back unchanged', () => {
+    const palette = Array.from({ length: 32 }, (_, i): [number, number, number] => [i * 8, 255 - i * 8, i]);
+    const m: ImagePayload = { kind: 'image', width: 5, height: 2, bitsPerPixel: 8, palette, pixels: new Uint8Array([0, 31, 7, 16, 1, 30, 2, 3, 4, 5]) };
+    const b = ilbm.encode!(m);
+    expect(b[8 + 4 + 8 + 8]).toBe(5);
+    expect(ilbm.decode(b).payload).toEqual(m);
+  });
+  it('never writes 6 planes with a 32-entry palette (that would read back as extra-half-brite)', () => {
+    const palette = Array.from({ length: 32 }, (_, i): [number, number, number] => [i, i, i]);
+    const m: ImagePayload = { kind: 'image', width: 2, height: 1, bitsPerPixel: 8, palette, pixels: new Uint8Array([40, 3]) };
+    const b = ilbm.encode!(m);
+    expect(b[8 + 4 + 8 + 8]).toBe(7);
+    expect(ilbm.decode(b).payload).toEqual(m);
+  });
   const model: ImagePayload = {
     kind: 'image', width: 3, height: 2, bitsPerPixel: 4, palette: [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
     pixels: new Uint8Array([0, 1, 2, 2, 1, 0]),
@@ -312,7 +326,7 @@ describe('ilbm encode', () => {
     const s = ilbm.decode(b);
     expect(s.annotations.map((a) => a.label)).toEqual(['FORM header', 'chunk BMHD', 'chunk CMAP', 'chunk CAMG', 'chunk BODY']);
     expect(String.fromCharCode(...b.subarray(0, 4), ...b.subarray(8, 12))).toBe('FORMILBM');
-    expect(b[8 + 4 + 8 + 8]).toBe(4); // nPlanes = bitsPerPixel
+    expect(b[8 + 4 + 8 + 8]).toBe(2); // nPlanes: the fewest planes that hold 3 colours and still decode as 4 bpp
     expect(b[8 + 4 + 8 + 10]).toBe(1); // compression
     expect(s.payload).toEqual(model);
     expect(coverage(s.annotations, b.length).exact).toBe(true);

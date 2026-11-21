@@ -72,9 +72,14 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [state.phase, state.pending]);
 
+  // A new room starts at its top.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [state.phase]);
+
   return (
     <>
-      <div className="sky" aria-hidden="true">
+      <div className={`sky sky-${state.phase}`} aria-hidden="true">
         <div className="moon" />
         <div className="fog" />
         <div className="fog two" />

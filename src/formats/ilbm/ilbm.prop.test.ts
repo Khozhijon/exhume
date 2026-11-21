@@ -65,8 +65,10 @@ describe('ilbm: slice-specific properties', () => {
         const rows = body.children!.filter((c) => c.label.startsWith('row'));
         expect(rows).toHaveLength(m.height);
         const rb = ((m.width + 15) >> 4) << 1;
+        const nPlanes = bytes[8 + 4 + 8 + 8]!; // BMHD.nPlanes: the encoder writes the fewest planes that fit
+        expect(nPlanes).toBeLessThanOrEqual(m.bitsPerPixel);
         for (const row of rows) {
-          const res = unpackBits(bytes.subarray(0, row.end), rb * m.bitsPerPixel, row.start);
+          const res = unpackBits(bytes.subarray(0, row.end), rb * nPlanes, row.start);
           expect(res.complete).toBe(true);
           expect(res.consumed).toBe(row.end - row.start);
         }

@@ -173,7 +173,7 @@ function readBody(r: ByteReader, st: State, type: number, end: number, warn: (m:
       return;
     }
     default:
-      readCell(r, st, type, end, warn);
+      if (CELL_RECORDS.has(type)) readCell(r, st, type, end, warn);
   }
 }
 

@@ -1,0 +1,182 @@
+.viewer-table {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.viewer-table .crt {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: 0;
+  padding: 14px 16px 12px;
+}
+
+.table-scroll {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+
+.table-content {
+  border-collapse: collapse;
+  table-layout: auto;
+  width: 100%;
+  font-size: 13px;
+}
+
+.table-content thead th {
+  background: var(--phosphor);
+  color: #020a04;
+  font-weight: 400;
+  text-shadow: none;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 0 4px;
+  height: 1.45em;
+  text-align: left;
+  line-height: 1;
+}
+
+.table-content th.rowhead {
+  text-align: right;
+  min-width: 3.2em;
+  z-index: 3;
+  left: 0;
+}
+
+.table-content th.col-num {
+  text-align: right;
+}
+
+.table-content th.col-text {
+  text-align: left;
+}
+
+.table-content .field-name {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table-content .field-type {
+  font-size: 0.8em;
+  color: #1a7043;
+  white-space: nowrap;
+}
+
+.table-content tbody td {
+  padding: 0 4px;
+  height: 1.45em;
+  line-height: 1.45em;
+  white-space: pre;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-content td.rowhead {
+  text-align: right;
+  min-width: 3.2em;
+  position: sticky;
+  left: 0;
+  background: #020a04;
+  border-right: 1px solid rgba(125, 255, 155, 0.2);
+  z-index: 1;
+}
+
+.table-content td.col-num {
+  text-align: right;
+}
+
+.table-content td.col-text {
+  text-align: left;
+}
+
+.table-content tr.sel td {
+  background: var(--phosphor);
+  color: #020a04;
+  text-shadow: none;
+}
+
+.table-content tr.sel td.rowhead {
+  background: var(--phosphor);
+}
+
+.table-content tr.row-deleted {
+  opacity: 0.6;
+  text-decoration: line-through;
+  color: #5ac08f;
+}
+
+.table-content tr.row-deleted.sel {
+  opacity: 1;
+}
+
+.crt-status {
+  display: flex;
+  gap: 1em;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 1.45em;
+  padding-top: 4px;
+  border-top: 1px solid rgba(125, 255, 155, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 12px;
+}
+
+.crt-status span {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 0 1 auto;
+}
+
+.table-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.table-clipped {
+  margin: 0;
+  font-size: 12px;
+  color: var(--bone-dim);
+  padding: 0 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .table-content tr {
+    transition: none;
+  }
+}
+
+/* ---------- reviewer pass: dBASE III PLUS colours (blue screen), so the table does not look like the
+   Lotus green-phosphor grid next door. Overrides only; structure above is from spec task 17. ---------- */
+.viewer-table .crt {
+  --dbase-bg: #0a0f8a;
+  --dbase-ink: #e9ecf6;
+  --dbase-bar: #b9c0d4;
+  --dbase-hot: #ffe45c;
+  --phosphor: var(--dbase-bar);
+  background: var(--dbase-bg);
+  color: var(--dbase-ink);
+  text-shadow: none;
+  box-shadow: inset 0 0 60px rgba(120, 140, 255, 0.12), 0 18px 50px #000a;
+  display: inline-block;
+  max-width: 100%;
+}
+.viewer-table .crt-panel .mode { background: none; color: var(--dbase-hot); padding: 0; }
+.viewer-table .table-content thead th { background: var(--dbase-bar); color: #0a0f5a; }
+.viewer-table .table-content .field-type { color: #2b3170; }
+.viewer-table .table-content td.rowhead { background: var(--dbase-bg); color: #9aa6e8; }
+.viewer-table .table-content tr.sel td,
+.viewer-table .table-content tr.sel td.rowhead { background: var(--dbase-hot); color: #1a1500; }
+.viewer-table .table-content tr.row-deleted { opacity: 1; }
+.viewer-table .table-content tr.row-deleted td { color: #b9c2ff; }
+.viewer-table .table-content tr.row-deleted.sel td { color: #5a4a00; }
+.viewer-table .crt-status { background: var(--dbase-bar); color: #0a0f5a; }
+.viewer-table .table-content td, .viewer-table .table-content th { padding-left: 8px; padding-right: 8px; }

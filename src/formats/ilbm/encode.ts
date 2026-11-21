@@ -2,7 +2,7 @@
 import { encodePack } from '../../core/packbits.js';
 import { ByteWriter } from '../../core/writer.js';
 import { ExhumeError } from '../../core/types.js';
-import type { SpecimenPayload } from '../../core/types.js';
+import type { ImagePayload, SpecimenPayload } from '../../core/types.js';
 import { rowBytesFor } from './body.js';
 
 const FMT = 'ilbm';
@@ -36,6 +36,23 @@ function planarBody(pixels: Uint8Array, width: number, height: number, nPlanes: 
   return encodePack(raw, rb);
 }
 
+/**
+ * Fewest bit planes that hold the picture and still decode to the same model: 1 for 1 bpp, 2..4 for
+ * 4 bpp, 5..8 for 8 bpp (a 32-colour picture is written with 5 planes, as an Amiga would).
+ * 6 planes with a 32-entry CMAP would be read back as extra-half-brite, so that case uses 7.
+ */
+function planesFor(model: ImagePayload): number {
+  const { bitsPerPixel: bpp, palette, pixels } = model;
+  if (bpp === 24) return 24;
+  if (bpp === 1) return 1;
+  let max = (palette?.length ?? 1) - 1;
+  for (let i = 0; i < pixels.length; i++) if (pixels[i]! > max) max = pixels[i]!;
+  const need = Math.max(1, 32 - Math.clz32(max));
+  let n = Math.max(bpp === 4 ? 2 : 5, need);
+  if (n === 6 && palette?.length === 32) n = 7;
+  return Math.min(n, bpp === 4 ? 4 : 8);
+}
+
 export function encode(model: SpecimenPayload): Uint8Array {
   if (model.kind !== 'image') throw new ExhumeError('ILBM can only encode images', FMT);
   const { width, height, bitsPerPixel: bpp, palette, pixels } = model;
@@ -50,7 +67,8 @@ export function encode(model: SpecimenPayload): Uint8Array {
   bmhd.writeU16be(height);
   bmhd.writeU16be(0);
   bmhd.writeU16be(0);
-  bmhd.writeU8(bpp);
+  const nPlanes = planesFor(model);
+  bmhd.writeU8(nPlanes);
   bmhd.writeU8(0); // masking: none
   bmhd.writeU8(1); // compression: ByteRun1
   bmhd.writeU8(0);
@@ -72,7 +90,7 @@ export function encode(model: SpecimenPayload): Uint8Array {
     camg.writeU32be(0);
     chunk(body, 'CAMG', camg.toUint8Array());
   }
-  chunk(body, 'BODY', planarBody(pixels, width, height, bpp));
+  chunk(body, 'BODY', planarBody(pixels, width, height, nPlanes));
 
   const out = new ByteWriter();
   writeId(out, 'FORM');

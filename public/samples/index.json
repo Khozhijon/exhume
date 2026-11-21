@@ -1,0 +1,38 @@
+[
+  {
+    "file": "GHOST.MAC",
+    "formatId": "macpaint",
+    "title": "A ghost, drawn in 1-bit",
+    "blurb": "Night scene with moon, tombstones, and a ghost."
+  },
+  {
+    "file": "PUMPKIN.PCX",
+    "formatId": "pcx",
+    "title": "Jack-o'-lantern, 8-bit",
+    "blurb": "Glowing pumpkin on a gradient backdrop."
+  },
+  {
+    "file": "MOON.IFF",
+    "formatId": "ilbm",
+    "title": "Moon and tree, 5-plane",
+    "blurb": "Amiga sunset with moon and silhouette."
+  },
+  {
+    "file": "BUDGET87.WK1",
+    "formatId": "wk1",
+    "title": "Household budget 1987",
+    "blurb": "Lotus 1-2-3 spreadsheet with formulas."
+  },
+  {
+    "file": "RESIDENT.DBF",
+    "formatId": "dbf",
+    "title": "Graveyard register",
+    "blurb": "dBASE table of dead technologies."
+  },
+  {
+    "file": "LETTER.WS",
+    "formatId": "wordstar",
+    "title": "Letter from 1986",
+    "blurb": "WordStar letter with formatting and page break."
+  }
+]

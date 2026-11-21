@@ -92,6 +92,8 @@ button { cursor: pointer; }
   background: radial-gradient(circle at 38% 36%, #fbf7e6 0%, #e9e2c6 55%, #c9c19f 100%);
   box-shadow: 0 0 60px 18px rgba(240, 232, 200, 0.16), 0 0 160px 60px rgba(240, 232, 200, 0.07);
 }
+.sky-specimen .moon { opacity: 0.12; transform: scale(0.7); transform-origin: 100% 0; }
+.moon { transition: opacity 0.6s, transform 0.6s; }
 .moon::after {
   content: ""; position: absolute; inset: 0; border-radius: 50%;
   background:

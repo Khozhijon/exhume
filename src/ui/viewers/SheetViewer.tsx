@@ -2,12 +2,23 @@ import { useMemo, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import type { SheetCell, SheetPayload } from '../../core/types.js';
 import { columnName } from '../../export/index.js';
-import { describeFormat, formatValue } from '../../formats/wk1/format-byte.js';
+import { formatValue } from '../../formats/wk1/format-byte.js';
 import { translateToExcel } from '../../formats/wk1/excel.js';
 
 export interface SheetViewerProps {
   payload: SheetPayload;
   fileName: string;
+}
+
+/** The format indicator 1-2-3 shows in the control panel: (C2), (F0), (G), (D1)... */
+function formatCode(f: SheetCell['format']): string {
+  const special = ['+', 'G', 'D1', 'D2', 'D3', 'T', 'H', 'D6', 'D7', 'D4', 'D5', 'D8', 'D9'];
+  if (f.type === 7) {
+    const code = special[f.decimals];
+    return code ? `(${code}) ` : '';
+  }
+  const letter = ['F', 'S', 'C', 'P', ','][f.type];
+  return letter ? `(${letter}${f.decimals}) ` : '';
 }
 
 const MAX_ROWS = 500;
@@ -74,12 +85,13 @@ export function SheetViewer({ payload, fileName }: SheetViewerProps) {
   };
 
   const colIndexes = Array.from({ length: cols }, (_, i) => i);
+  const totalCh = colIndexes.reduce((n, c) => n + (payload.columnWidths[c] ?? DEFAULT_WIDTH) + 1, 0);
   return (
     <div className="viewer-sheet">
       <div className="crt">
         <div className="crt-panel" aria-live="polite">
           <span>
-            {address}: {current ? `${describeFormat(current.format)} ` : ''}{width !== undefined ? `[W${width}] ` : ''}{content}
+            {address}: {current ? formatCode(current.format) : ''}{current?.format.protected ? 'PR ' : ''}{width !== undefined ? `[W${width}] ` : ''}{content}
           </span>
           <span className="mode">READY</span>
         </div>
@@ -97,6 +109,7 @@ export function SheetViewer({ payload, fileName }: SheetViewerProps) {
             aria-activedescendant={`cell-${sel.row}-${sel.col}`}
             tabIndex={0}
             onKeyDown={onKey}
+            style={{ width: `calc(3.4em + ${totalCh}ch)` }}
           >
             <colgroup>
               <col style={{ width: '3.4em' }} />
