@@ -25,3 +25,13 @@ Task 13
 - Tests in `src/samples/samples.test.ts` updated to the new content.
 
 Tasks 17 and 18: reviewed in the browser (see the UI review notes in the commit that follows).
+
+## Later: a bug found by a property test (21 Nov)
+
+Property 8 ("decompiling arbitrary bytes never throws, and its text compiles back to the same text",
+3000 runs) passed for hours and then failed on run 368 of one execution. fast-check shrank the input
+to ten bytes: a range whose corners are stored out of order (`DZ$1..$DY$129`). The decompiler printed
+the file faithfully, but the formula compiler silently reordered the corners, so the text did not
+compile back to the same bytes. Fix: the compiler keeps corners as written
+(`src/formats/wk1/formula-parse.ts`); regression test with the shrunk counterexample in
+`formula.test.ts`. An example test would never have found this.

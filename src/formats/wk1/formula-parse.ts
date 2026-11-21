@@ -2,8 +2,8 @@
 //
 // Compiler decisions: a number constant that is an integer 0..32767 is stored as an integer (0x05),
 // every other one as an f64 (0x00); a leading `-` or `+` is always an operator (the tree keeps
-// -5 as unary minus applied to 5); each typed parenthesis becomes a 0x04 token; ranges are normalised
-// so the start is the top-left corner. Function names are case-insensitive, `@PI` and `@PI()` both work.
+// -5 as unary minus applied to 5); each typed parenthesis becomes a 0x04 token; range corners are kept
+// in the order written (never reordered). Function names are case-insensitive, `@PI` and `@PI()` both work.
 import { ExhumeError } from '../../core/types.js';
 import {
   BIN_OPCODE, FN_BY_NAME, MAX_COL, MAX_ROW, UN_OPCODE,
@@ -206,9 +206,9 @@ class Parser {
     this.pos++;
     const b = this.take();
     if (b.k !== 'ref') return fail('a range needs a cell after ..');
-    const [c1, c2] = a.col.v <= b.col.v ? [a.col, b.col] : [b.col, a.col];
-    const [r1, r2] = a.row.v <= b.row.v ? [a.row, b.row] : [b.row, a.row];
-    return { t: 'range', c1, r1, c2, r2 };
+    // Corners are kept exactly as written. A file may store a range "backwards" (B5..A1), and the
+    // decompiler prints what the file says, so compiling that text must give the same bytes back.
+    return { t: 'range', c1: a.col, r1: a.row, c2: b.col, r2: b.row };
   }
 
   private call(name: string): Expr {

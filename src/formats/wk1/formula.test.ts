@@ -245,8 +245,9 @@ describe('compileFormula', () => {
     );
   });
 
-  it('normalises a backwards range', () => {
-    expect(compileFormula('C3..B2', 0, 0)).toEqual(compileFormula('B2..C3', 0, 0));
+  it('keeps a backwards range as written (a file may store one, and the text must compile back to it)', () => {
+    expect(compileFormula('C3..B2', 0, 0)).not.toEqual(compileFormula('B2..C3', 0, 0));
+    expect(decompileFormula(compileFormula('C3..B2', 0, 0), 0, 0)).toBe('C3..B2');
   });
 
   it('accepts @PI and @PI(), spaces and ; as an argument separator', () => {
@@ -280,5 +281,15 @@ describe('compileFormula', () => {
       expect(back, t).not.toBeNull();
       expect(compileFormula(back as string, 3, 4)).toEqual(b);
     }
+  });
+});
+
+describe('regression: a range stored with its corners out of order (found by property 8)', () => {
+  it('prints the range as the file stores it and compiles that text back to the same bytes', () => {
+    // range: start col relative +0, start row absolute 0, end col absolute 128, end row absolute 128, at DZ1
+    const bytes = Uint8Array.from([0x02, 0x00, 0x80, 0x00, 0x00, 0x80, 0x00, 0x80, 0x00, 0x03]);
+    const text = decompileFormula(bytes, 129, 0);
+    expect(text).toBe('DZ$1..$DY$129');
+    expect(Array.from(compileFormula(text!, 129, 0))).toEqual(Array.from(bytes));
   });
 });
