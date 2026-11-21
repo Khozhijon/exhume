@@ -14,6 +14,7 @@ export interface HexPaneProps {
 
 const ROW = 22; // px, matches .hex-row in autopsy.css
 const HUES = 8;
+const HUE_NAMES = ['Indigo', 'Plum', 'Jade', 'Ochre', 'Teal', 'Rose', 'Olive', 'Lavender'];
 
 /** Virtualised hex dump. Each byte is coloured by the top-level structure it belongs to. */
 export function HexPane({ bytes, annotations, selected, reveal, onPick }: HexPaneProps) {
@@ -55,6 +56,7 @@ export function HexPane({ bytes, annotations, selected, reveal, onPick }: HexPan
       const b = bytes[at]!;
       const span = topSpanAt(index, at);
       const on = selected !== null && at >= selected.start && at < selected.end;
+      const hueLabel = span >= 0 ? HUE_NAMES[span % HUES] : 'Unstructured';
       ascii += b >= 0x20 && b < 0x7f ? String.fromCharCode(b) : '.';
       cells.push(
         <button
@@ -63,7 +65,7 @@ export function HexPane({ bytes, annotations, selected, reveal, onPick }: HexPan
           tabIndex={on && at === selected?.start ? 0 : -1}
           className={`byte${span >= 0 ? ` hue-${span % HUES}` : ' byte-loose'}${on ? ' byte-on' : ''}${i === 8 ? ' byte-gap' : ''}`}
           onClick={() => onPick(at)}
-          aria-label={`byte ${hex(b, 2)} at offset ${hex(at, 6)}`}
+          aria-label={`byte ${hex(b, 2)} (${hueLabel}) at offset ${hex(at, 6)}`}
         >
           {hex(b, 2)}
         </button>,

@@ -16,6 +16,7 @@ export interface AnnotationTreeProps {
 
 export const PAGE = 120;
 const HUES = 8;
+const HUE_NAMES = ['Indigo', 'Plum', 'Jade', 'Ochre', 'Teal', 'Rose', 'Olive', 'Lavender'];
 
 /** The structure the decoder found, as a collapsible tree. Long lists are paged. */
 export function AnnotationTree(props: AnnotationTreeProps) {
@@ -53,6 +54,7 @@ function Branch(props: BranchProps) {
     const kids = node.children ?? [];
     const open = expanded.has(key);
     const hue = prefix.length === 0 ? i % HUES : (prefix[0] ?? 0) % HUES;
+    const hueName = HUE_NAMES[hue];
     items.push(
       <div key={key} role="treeitem" aria-expanded={kids.length ? open : undefined} aria-selected={key === selectedKey}>
         <div className={`tree-row${key === selectedKey ? ' tree-on' : ''}`} style={{ paddingLeft: 6 + prefix.length * 14 }}>
@@ -64,7 +66,7 @@ function Branch(props: BranchProps) {
             <span className="tree-twist" aria-hidden="true" />
           )}
           <button type="button" className="tree-node" data-path={key} onClick={() => props.onSelect(path)}>
-            <span className={`tree-swatch hue-${hue}`} aria-hidden="true" />
+            <span className={`tree-swatch hue-${hue}`} aria-label={hueName} />
             <span className="tree-label">{node.label}</span>
             {node.value !== undefined && <span className="tree-value">= {node.value}</span>}
             <span className="tree-span">

@@ -72,13 +72,18 @@ export default function App() {
     return () => clearTimeout(timer);
   }, [state.phase, state.pending]);
 
-  // A new room starts at its top.
+  // A new room starts at its top, and focus moves to main.
   useEffect(() => {
     window.scrollTo(0, 0);
+    const main = document.getElementById('main');
+    if (main && (state.phase === 'graveyard' || state.phase === 'specimen')) {
+      main.focus();
+    }
   }, [state.phase]);
 
   return (
     <>
+      <a href="#main" className="skip-link">Skip to content</a>
       <div className={`sky sky-${state.phase}`} aria-hidden="true">
         <div className="moon" />
         <div className="fog" />

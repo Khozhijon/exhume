@@ -220,14 +220,14 @@ Build Exhume from the ground up: scaffold and tooling first, then core infrastru
   - Ensure `ExhumeError` from either tool returns `{ error: message }` and does not crash the server
   - _Requirements: 23.4, 23.5_
 
-- [ ] 25. Offline / PWA, accessibility pass, and deploy workflow
+- [x] 25. Offline / PWA, accessibility pass, and deploy workflow
   - Add a service worker (Vite PWA plugin or hand-written `public/sw.js`) that pre-caches all static assets on first load; no user file data ever touches the cache
   - Add a persistent, visible privacy notice to the UI: "All files decoded locally. Nothing leaves your browser."
   - Audit all interactive elements: visible `--ember` focus ring on every focusable element; `aria-live` regions announce "Exhuming…", "Done", and error messages; minimum 4.5:1 contrast ratio for all text; Autopsy colour spans carry text labels (no information by colour alone); keyboard tab order through tombstones, drop zone, zoom controls, export buttons, and autopsy tree
   - Create `.github/workflows/deploy.yml` with steps: checkout → install → `npm run typecheck` → `npm test` → `npm run build` → deploy `dist/` to GitHub Pages; `VITE_BASE` read from env
   - _Requirements: 21.1, 21.2, 21.3, 22.1, 22.2, 22.3, 22.4, 22.5_
 
-- [ ] 26. Final checkpoint — full suite passes
+- [x] 26. Final checkpoint — full suite passes
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes

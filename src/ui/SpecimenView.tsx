@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import type { DragEvent } from 'react';
+import type { DragEvent, KeyboardEvent } from 'react';
 import type { FormatModule, Specimen } from '../core/types.js';
 import { Autopsy } from './autopsy/Autopsy.js';
 import { CoronerReport } from './CoronerReport.js';
 import { ExportBar } from './ExportBar.js';
+import { FileMap } from './FileMap.js';
 import { ImageViewer } from './viewers/ImageViewer.js';
 import { SheetViewer } from './viewers/SheetViewer.js';
 import { TableViewer } from './viewers/TableViewer.js';
@@ -11,6 +12,7 @@ import { DocumentViewer } from './viewers/DocumentViewer.js';
 import { formatSize } from './bytes.js';
 import './specimen.css';
 import './frames.css';
+import './autopsy.css';
 
 export interface SpecimenViewProps {
   fileName: string;
@@ -41,11 +43,29 @@ export function SpecimenView({ fileName, bytes, module, specimen, onBack, onFile
   const tabs: Array<{ id: Tab; label: string }> = [
     { id: 'viewer', label: 'Viewer' },
     { id: 'autopsy', label: 'Autopsy' },
-    { id: 'report', label: `Coroner’s report${warnings.length ? ` (${warnings.length})` : ''}` },
+    { id: 'report', label: `Coroner's report${warnings.length ? ` (${warnings.length})` : ''}` },
   ];
 
+  const handleTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex = index;
+    if (e.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + tabs.length) % tabs.length;
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight') {
+      nextIndex = (index + 1) % tabs.length;
+      e.preventDefault();
+    }
+    if (nextIndex !== index) {
+      setTab(tabs[nextIndex]!.id);
+      setTimeout(() => {
+        const btn = document.querySelector(`[role="tab"][aria-selected="true"]`) as HTMLButtonElement;
+        btn?.focus();
+      }, 0);
+    }
+  };
+
   return (
-    <main className="specimen" onDragOver={(e) => e.preventDefault()} onDrop={(e) => void onDrop(e)}>
+    <main id="main" tabIndex={-1} className="specimen" onDragOver={(e) => e.preventDefault()} onDrop={(e) => void onDrop(e)}>
       <header className="specimen-head">
         <button type="button" className="btn btn-quiet" onClick={onBack}>&larr; Graveyard</button>
         <div className="specimen-id">
@@ -59,8 +79,15 @@ export function SpecimenView({ fileName, bytes, module, specimen, onBack, onFile
         <ExportBar fileName={fileName} specimen={specimen} />
       </header>
 
+      <section className="epitaph-strip" aria-label="About this specimen">
+        <p className="epitaph-line">
+          <span className="epitaph-here">Here lies {module.name}.</span> {module.epitaph}
+        </p>
+        <FileMap annotations={specimen.annotations} size={bytes.length} onJump={jump} />
+      </section>
+
       <div className="tabs" role="tablist" aria-label="Rooms">
-        {tabs.map((t) => (
+        {tabs.map((t, index) => (
           <button
             key={t.id}
             type="button"
@@ -69,7 +96,9 @@ export function SpecimenView({ fileName, bytes, module, specimen, onBack, onFile
             aria-selected={tab === t.id}
             aria-controls={`panel-${t.id}`}
             className="tab"
+            tabIndex={tab === t.id ? 0 : -1}
             onClick={() => setTab(t.id)}
+            onKeyDown={(e) => handleTabKeyDown(e, index)}
           >
             {t.label}
           </button>

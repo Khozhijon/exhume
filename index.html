@@ -1,13 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="manifest" href="./manifest.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exhume</title>
+    <meta name="theme-color" content="#0b0d12" />
+    <meta name="description" content="Exhume raises dead file formats from the grave. MacPaint, PC Paintbrush, Amiga IFF, Lotus 1-2-3, dBASE and WordStar files, decoded in your browser. Nothing is uploaded." />
+    <meta property="og:title" content="Exhume: raise your dead files" />
+    <meta property="og:description" content="Drop a file no program opens any more. Exhume decodes it in your browser, shows what every byte means, and exports it to a format that will still open tomorrow." />
+    <title>Exhume: raise your dead files</title>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>Exhume decodes old files in your browser and needs JavaScript to do it.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

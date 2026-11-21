@@ -31,8 +31,9 @@ function display(cell: SheetCell): string {
   return formatValue(cell);
 }
 
-function cellClass(cell: SheetCell | undefined, selected: boolean): string {
+function cellClass(cell: SheetCell | undefined, selected: boolean, spill = false): string {
   const c: string[] = [];
+  if (spill) c.push('spill');
   if (selected) c.push('sel');
   if (cell) {
     if (typeof cell.value === 'number') c.push('num');
@@ -130,13 +131,15 @@ export function SheetViewer({ payload, fileName }: SheetViewerProps) {
                   {colIndexes.map((c) => {
                     const cell = cells.get(r * 256 + c);
                     const on = sel.row === r && sel.col === c;
+                    // like 1-2-3, a long left-aligned label runs on over empty cells to its right
+                    const spill = cell?.type === 'label' && (cell.align ?? 'left') === 'left' && !cells.has(r * 256 + c + 1);
                     return (
                       <td
                         key={c}
                         id={`cell-${r}-${c}`}
                         role="gridcell"
                         aria-selected={on}
-                        className={cellClass(cell, on)}
+                        className={cellClass(cell, on, spill)}
                         onClick={() => setSel({ row: r, col: c })}
                       >
                         {cell ? display(cell) : ''}

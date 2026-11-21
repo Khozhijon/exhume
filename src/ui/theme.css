@@ -41,6 +41,15 @@ button { cursor: pointer; }
 
 :focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; border-radius: 2px; }
 
+.skip-link {
+  position: absolute; top: -40px; left: 20px; background: var(--ember); color: #1a0d02;
+  padding: 8px 16px; border-radius: var(--radius); text-decoration: none; font-weight: 600;
+  z-index: 1000;
+}
+.skip-link:focus { top: 20px; }
+
+main:focus { outline: none; }
+
 .btn {
   display: inline-flex; align-items: center; gap: 0.45em;
   padding: 0.5em 0.95em;

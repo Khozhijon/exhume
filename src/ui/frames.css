@@ -47,6 +47,7 @@
 .crt th.rowhead { left: 0; z-index: 1; text-align: right; min-width: 3.2em; }
 .crt thead th.rowhead { z-index: 2; }
 .crt td { padding: 0 0.5ch; white-space: pre; overflow: hidden; height: 1.45em; cursor: cell; }
+.crt td.spill { overflow: visible; }
 .crt td.num { text-align: right; }
 .crt td.center { text-align: center; }
 .crt td.right { text-align: right; }

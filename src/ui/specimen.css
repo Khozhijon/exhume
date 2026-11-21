@@ -11,6 +11,19 @@
 .export-buttons { display: flex; flex-wrap: wrap; gap: 6px; }
 .export-note { flex-basis: 100%; margin: 0; min-height: 1.2em; font-size: 0.82rem; color: var(--moss); text-align: right; }
 
+.epitaph-strip { padding: 14px 0 4px; }
+.epitaph-line { margin: 0 0 10px; font-family: var(--serif); font-size: 1.08rem; color: var(--bone-dim); }
+.epitaph-here { color: var(--bone); font-style: italic; }
+.filemap-bar { display: flex; height: 14px; border-radius: 3px; overflow: hidden; border: 1px solid rgba(232, 228, 216, 0.22); background: #07090d; }
+.filemap-seg { flex: 1 1 0; min-width: 2px; height: 100%; padding: 0; border: 0; border-right: 1px solid rgba(7, 9, 13, 0.55); background: var(--hue); filter: brightness(1.5) saturate(1.2); }
+.filemap-seg:hover, .filemap-seg:focus-visible { background: var(--ember); filter: none; outline-offset: -2px; }
+.filemap-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 2px 14px; margin: 6px 0 0; padding: 0; font-size: 0.8rem; color: var(--bone-dim); }
+.filemap-key { display: inline-flex; align-items: center; gap: 6px; padding: 1px 0; border: 0; background: none; color: var(--bone-dim); font-family: var(--mono); font-size: 0.76rem; }
+.filemap-key:hover { color: var(--bone); text-decoration: underline; }
+.filemap-key .tree-swatch { filter: brightness(1.5) saturate(1.2); }
+.filemap-size { color: #7d8492; }
+.filemap-more { font-family: var(--mono); font-size: 0.76rem; align-self: center; }
+
 .tabs { display: flex; gap: 4px; margin-top: 14px; border-bottom: 1px solid rgba(232, 228, 216, 0.14); overflow-x: auto; }
 .tab {
   padding: 0.6em 1.1em; border: 0; border-bottom: 2px solid transparent; background: none;

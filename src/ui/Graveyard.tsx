@@ -1,9 +1,10 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { DragEvent, ChangeEvent } from 'react';
 import { modules } from '../core/registry.js';
 import { samples } from '../samples/data.js';
 import type { SampleSpecimen } from '../samples/data.js';
 import { base64ToBytes } from './bytes.js';
+import { registerOffline } from './offline.js';
 import './graveyard.css';
 
 export interface GraveyardProps {
@@ -15,7 +16,14 @@ const tilts = ['-2.2deg', '1.4deg', '-0.8deg', '2deg', '-1.6deg', '0.9deg'];
 
 export function Graveyard({ onFile, error }: GraveyardProps) {
   const [over, setOver] = useState(false);
+  const [offline, setOffline] = useState(false);
   const input = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    registerOffline((state) => {
+      if (state === 'ready') setOffline(true);
+    });
+  }, []);
 
   const take = useCallback(
     async (file: File | undefined | null) => {
@@ -38,6 +46,8 @@ export function Graveyard({ onFile, error }: GraveyardProps) {
 
   return (
     <main
+      id="main"
+      tabIndex={-1}
       className="graveyard"
       onDragOver={(e) => { e.preventDefault(); setOver(true); }}
       onDragLeave={() => setOver(false)}
@@ -97,10 +107,23 @@ export function Graveyard({ onFile, error }: GraveyardProps) {
       </ul>
 
       <footer className="colophon">
-        <p>
-          Every decoder here was written from the published format descriptions and is checked with
-          property-based tests. Open source, MIT. Built for Kiroween 2026.
-        </p>
+        <div className="colophon-content">
+          <p>
+            Every decoder here was written from the published format descriptions and is checked with
+            property-based tests. Open source, MIT. Built for Kiroween 2026.
+          </p>
+          <p>
+            <a href="https://github.com/Khozhijon/exhume">Source code</a>
+          </p>
+        </div>
+        <div className="privacy-notice" role="status">
+          <p><strong>All files decoded locally. Nothing leaves your browser.</strong></p>
+          <p>
+            Your files are decoded in this tab. Nothing is uploaded. There is no server. There are no analytics,
+            no cookies, no tracking. What you exhume stays in your hands.
+          </p>
+          {offline && <p className="offline-ready">✓ Offline ready: this page now works without a connection.</p>}
+        </div>
       </footer>
     </main>
   );

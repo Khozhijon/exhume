@@ -26,8 +26,8 @@
 .byte-on { background: var(--ember) !important; color: #1a0d02 !important; font-weight: 700; }
 
 /* Eight span colours, chosen to stay readable under light text; spans are also labelled in the tree. */
-.hue-0 { --hue: #1d3a5c; } .hue-1 { --hue: #4a2f57; } .hue-2 { --hue: #20503f; } .hue-3 { --hue: #5a4420; }
-.hue-4 { --hue: #1f4f5a; } .hue-5 { --hue: #5a2a33; } .hue-6 { --hue: #3b4a22; } .hue-7 { --hue: #3a3a66; }
+.hue-0 { --hue: #2b4a7a; } .hue-1 { --hue: #5a3f75; } .hue-2 { --hue: #306055; } .hue-3 { --hue: #6a5a30; }
+.hue-4 { --hue: #2d5f70; } .hue-5 { --hue: #6a3a45; } .hue-6 { --hue: #4a5a30; } .hue-7 { --hue: #4a4a80; }
 
 .tree-pane { padding: 6px 0; font-size: 0.86rem; }
 .tree-row { display: flex; align-items: center; min-height: 24px; }
