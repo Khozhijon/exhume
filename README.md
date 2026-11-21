@@ -5,7 +5,7 @@ shows what every byte means, and hands the content back in a format that will st
 
 Kiroween 2026 entry, category **Resurrection**.
 
-- Live app: _added when the repository is published_
+- Live app: **https://khozhijon.github.io/exhume/**
 - Demo video: _added when the video is published_
 
 ![The six formats Exhume reads, as tombstones](docs/img/graveyard.jpg)
