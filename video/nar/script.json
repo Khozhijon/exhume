@@ -1,0 +1,460 @@
+{
+ "about": "Narration for the demo video, one take per line. say = what the voice is given (some words spelled the way they sound, and commas where a breath belongs); show = the caption (defaults to say, tidied). ex = Chatterbox exaggeration (higher: more expressive), cfg = cfg_weight, wps = the fastest this line may be, in words per second (a faster take is slowed down, pitch kept, by 20% at most), pause = silence after the line in seconds, takes = how many takes to generate and choose from. Measured on this voice: cfg_weight does not change the pace; short phrases and commas do.",
+ "defaults": {
+  "ex": 0.5,
+  "cfg": 0.5,
+  "temp": 0.8,
+  "wps": 3.1,
+  "pause": 0.3,
+  "takes": 2
+ },
+ "clips": [
+  {
+   "key": "01-hook",
+   "lines": [
+    {
+     "say": "What happens to a file,",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.8,
+     "pause": 0.25,
+     "takes": 3
+    },
+    {
+     "say": "when the last program that could read it, is gone?",
+     "show": "when the last program that could read it is gone?",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.8,
+     "pause": 1.0,
+     "takes": 3
+    },
+    {
+     "say": "The bytes are still there.",
+     "pause": 0.55
+    },
+    {
+     "say": "But nothing, opens them.",
+     "show": "But nothing opens them.",
+     "ex": 0.7,
+     "cfg": 0.3,
+     "wps": 2.4,
+     "pause": 1.0,
+     "takes": 3
+    },
+    {
+     "say": "A drawing, made in Mac Paint.",
+     "pause": 0.4
+    },
+    {
+     "say": "A budget, in Lotus one two three.",
+     "wps": 3.3,
+     "pause": 0.4
+    },
+    {
+     "say": "A letter, typed in WordStar.",
+     "ex": 0.55,
+     "cfg": 0.45,
+     "pause": 1.0
+    },
+    {
+     "say": "This, is Exhume.",
+     "show": "This is Exhume.",
+     "ex": 0.75,
+     "cfg": 0.3,
+     "wps": 2.2,
+     "takes": 5
+    }
+   ]
+  },
+  {
+   "key": "02-drop",
+   "lines": [
+    {
+     "say": "So, drop a dead file on the page.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.9,
+     "pause": 0.8
+    },
+    {
+     "say": "It reads the bytes, not the name,",
+     "wps": 3.2,
+     "pause": 0.25
+    },
+    {
+     "say": "and decodes them right here, in your browser.",
+     "wps": 3.2,
+     "pause": 0.55
+    },
+    {
+     "say": "Nothing, is uploaded.",
+     "show": "Nothing is uploaded.",
+     "ex": 0.65,
+     "cfg": 0.3,
+     "wps": 2.3,
+     "pause": 1.0,
+     "takes": 3
+    },
+    {
+     "say": "And there it is: a Mac Paint drawing.",
+     "ex": 0.7,
+     "cfg": 0.35,
+     "wps": 2.7,
+     "pause": 0.5,
+     "takes": 3
+    },
+    {
+     "say": "Every dot is black, or white.",
+     "wps": 2.9,
+     "show": "Every dot is black or white."
+    }
+   ]
+  },
+  {
+   "key": "03-autopsy",
+   "lines": [
+    {
+     "say": "And every decoder, shows its work.",
+     "show": "And every decoder shows its work.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.8,
+     "pause": 0.7
+    },
+    {
+     "say": "This is the autopsy: the whole file, byte by byte.",
+     "ex": 0.55,
+     "cfg": 0.45,
+     "wps": 2.9,
+     "pause": 0.6
+    },
+    {
+     "say": "Pick any byte,",
+     "pause": 0.2
+    },
+    {
+     "say": "and it tells you what it is.",
+     "pause": 0.4
+    },
+    {
+     "say": "A brush pattern.",
+     "ex": 0.45,
+     "cfg": 0.55,
+     "wps": 3.3,
+     "pause": 0.3
+    },
+    {
+     "say": "A row of compressed pixels.",
+     "ex": 0.45,
+     "cfg": 0.55,
+     "wps": 3.3,
+     "pause": 0.9
+    },
+    {
+     "say": "Every single byte, is accounted for.",
+     "show": "Every single byte is accounted for.",
+     "ex": 0.7,
+     "cfg": 0.3,
+     "wps": 2.4,
+     "takes": 3
+    }
+   ]
+  },
+  {
+   "key": "04-lotus",
+   "lines": [
+    {
+     "say": "It is not only pictures.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.9,
+     "pause": 0.7
+    },
+    {
+     "say": "This, is a Lotus one two three worksheet.",
+     "show": "This is a Lotus 1-2-3 worksheet.",
+     "wps": 3.0,
+     "pause": 0.5
+    },
+    {
+     "say": "Its formulas were never stored as text.",
+     "wps": 3.0,
+     "pause": 0.35
+    },
+    {
+     "say": "They were stored as bytecode.",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.6,
+     "pause": 0.7,
+     "takes": 3
+    },
+    {
+     "say": "Exhume decompiles them,",
+     "pause": 0.25
+    },
+    {
+     "say": "translates them to Excel,",
+     "pause": 0.3
+    },
+    {
+     "say": "and exports a workbook, that still calculates.",
+     "show": "and exports a workbook that still calculates.",
+     "ex": 0.7,
+     "cfg": 0.3,
+     "wps": 2.5,
+     "takes": 3
+    }
+   ]
+  },
+  {
+   "key": "05a-dbase",
+   "lines": [
+    {
+     "say": "Here is a dee base table.",
+     "pause": 0.5
+    },
+    {
+     "say": "The rows somebody deleted?",
+     "ex": 0.7,
+     "cfg": 0.35,
+     "wps": 2.8,
+     "pause": 0.45,
+     "takes": 3
+    },
+    {
+     "say": "They are still there.",
+     "ex": 0.65,
+     "cfg": 0.3,
+     "wps": 2.4,
+     "takes": 3
+    }
+   ]
+  },
+  {
+   "key": "05b-wordstar",
+   "lines": [
+    {
+     "say": "A WordStar letter, on fan fold paper.",
+     "ex": 0.55,
+     "cfg": 0.45,
+     "wps": 2.9
+    }
+   ]
+  },
+  {
+   "key": "05c-damaged",
+   "lines": [
+    {
+     "say": "And when a file is damaged?",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.8,
+     "pause": 0.8,
+     "takes": 3
+    },
+    {
+     "say": "It does not guess.",
+     "ex": 0.7,
+     "cfg": 0.3,
+     "wps": 2.3,
+     "pause": 0.7,
+     "takes": 3
+    },
+    {
+     "say": "The coroner's report lists exactly what was lost.",
+     "wps": 3.0
+    }
+   ]
+  },
+  {
+   "key": "06-spec",
+   "lines": [
+    {
+     "say": "So, how was it built?",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.7,
+     "pause": 0.7,
+     "takes": 3
+    },
+    {
+     "say": "Spec first, with Keero.",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.5,
+     "pause": 0.7,
+     "takes": 5
+    },
+    {
+     "say": "From a two page brief,",
+     "show": "From a two-page brief,",
+     "pause": 0.2
+    },
+    {
+     "say": "Keero wrote twenty three requirements,",
+     "show": "Kiro wrote 23 requirements,",
+     "wps": 3.2,
+     "pause": 0.3
+    },
+    {
+     "say": "a design, with twelve correctness properties,",
+     "show": "a design with 12 correctness properties,",
+     "wps": 3.2,
+     "pause": 0.3
+    },
+    {
+     "say": "and twenty six tasks.",
+     "show": "and 26 tasks.",
+     "ex": 0.55,
+     "cfg": 0.45,
+     "wps": 2.8,
+     "pause": 0.7
+    },
+    {
+     "say": "That spec became the contract,",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.8,
+     "pause": 0.2
+    },
+    {
+     "say": "for all the code that followed.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.8
+    }
+   ]
+  },
+  {
+   "key": "07-kiro",
+   "lines": [
+    {
+     "say": "Steering files carry the promises:",
+     "wps": 3.0,
+     "pause": 0.3
+    },
+    {
+     "say": "private, honest, never crashes.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.4,
+     "pause": 0.6
+    },
+    {
+     "say": "Hooks enforce them, on every file an agent saves.",
+     "wps": 3.2,
+     "pause": 0.7
+    },
+    {
+     "say": "It even ships its own M C P server,",
+     "show": "It even ships its own MCP server,",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 3.0,
+     "pause": 0.3
+    },
+    {
+     "say": "so an agent can look inside a binary file, instead of guessing.",
+     "show": "so an agent can look inside a binary file instead of guessing.",
+     "ex": 0.55,
+     "cfg": 0.4,
+     "wps": 3.1,
+     "pause": 0.7
+    },
+    {
+     "say": "One custom agent digs.",
+     "pause": 0.4
+    },
+    {
+     "say": "Another, the coroner, reviews.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.6
+    }
+   ]
+  },
+  {
+   "key": "08-honest",
+   "lines": [
+    {
+     "say": "Now, the honest part.",
+     "ex": 0.65,
+     "cfg": 0.35,
+     "wps": 2.6,
+     "pause": 0.8,
+     "takes": 3
+    },
+    {
+     "say": "This entry was built on Keero's free tier:",
+     "wps": 3.0,
+     "pause": 0.3
+    },
+    {
+     "say": "fifty credits a month.",
+     "ex": 0.6,
+     "cfg": 0.35,
+     "wps": 2.5,
+     "pause": 0.7,
+     "takes": 3
+    },
+    {
+     "say": "So Keero wrote the spec, and the tasks those credits could buy.",
+     "wps": 3.2,
+     "pause": 0.5
+    },
+    {
+     "say": "An A I pair programmer built the rest, and reviewed every run.",
+     "wps": 3.0,
+     "pause": 0.7,
+     "show": "An AI pair-programmer built the rest, and reviewed every run."
+    },
+    {
+     "say": "Every transcript, and what it cost, is in the repository.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.9
+    }
+   ]
+  },
+  {
+   "key": "09-close",
+   "lines": [
+    {
+     "say": "Six dead formats.",
+     "ex": 0.55,
+     "cfg": 0.45,
+     "wps": 2.6,
+     "pause": 0.5
+    },
+    {
+     "say": "Four hundred tests.",
+     "wps": 2.6,
+     "pause": 0.5
+    },
+    {
+     "say": "No server. No upload.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.6,
+     "pause": 0.35
+    },
+    {
+     "say": "And it works offline.",
+     "ex": 0.6,
+     "cfg": 0.4,
+     "wps": 2.6,
+     "pause": 1.0
+    },
+    {
+     "say": "Exhume: raise your dead files.",
+     "ex": 0.75,
+     "cfg": 0.3,
+     "wps": 2.2,
+     "takes": 5
+    }
+   ]
+  }
+ ]
+}

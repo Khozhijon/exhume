@@ -1,1 +1,0 @@
-It is not only pictures. This is a Lotus worksheet. Its formulas were stored as bytecode. Exhume decompiles them, translates them to Excel, and exports a workbook that still calculates.

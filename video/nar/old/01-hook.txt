@@ -1,1 +1,0 @@
-Files do not die when the disk fails. They die when the last program that understood them stops running. A drawing made in Mac Paint. A family budget in Lotus one two three. A letter typed in WordStar. The bytes are still there. Nothing opens them. This is Exhume.

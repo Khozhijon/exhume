@@ -1,1 +1,0 @@
-Steering files carry the promises: private, honest, never crashes. Hooks enforce them on every file an agent saves, and a guard checks every shell command. Exhume ships its own M C P server, so an agent can look inside a binary file instead of guessing. One custom agent digs. Another, the coroner, reviews.

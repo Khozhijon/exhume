@@ -1,1 +1,0 @@
-This entry was built on Keero's free tier: fifty credits. So Keero wrote the spec and the tasks those credits could buy, and Claude Code implemented the rest against Keero's spec, and reviewed every run. Every transcript, and what it cost, is in the repository.

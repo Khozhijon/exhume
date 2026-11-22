@@ -1,1 +1,0 @@
-Exhume was built spec first, with Keero. From a two page brief, Keero wrote twenty three requirements, a design with twelve correctness properties, and twenty six tasks. That spec was the contract for all the code that followed.

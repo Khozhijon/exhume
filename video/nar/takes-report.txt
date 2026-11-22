@@ -1,0 +1,304 @@
+== 01-hook
+  1. take 3 of 3  sim 1.00  1.4 s  3.5 words/s (was 4.7, slowed x0.80)  pitch sd 4.5 st  ex 0.60 cfg 0.40  pause 0.25
+       script: What happens to a file,
+       heard : What happens to a file?
+       (take 1: sim 1.00, 1.1 s, pitch sd 3.6 st, heard: What happens to a file?)
+       (take 2: sim 1.00, 1.0 s, pitch sd 2.3 st, heard: What happens to a file?)
+  2. take 1 of 3  sim 1.00  3.0 s  3.3 words/s (was 4.3, slowed x0.80)  pitch sd 6.1 st  ex 0.65 cfg 0.35  pause 1.00
+       script: when the last program that could read it, is gone?
+       heard : when the last program that could read it is gone?
+       (take 2: sim 1.00, 2.1 s, pitch sd 5.7 st, heard: when the last program that could read it is gone.)
+       (take 3: sim 1.00, 2.3 s, pitch sd 4.7 st, heard: when the last program that could read it is gone?)
+  3. take 1 of 2  sim 1.00  1.5 s  3.4 words/s (was 4.5, slowed x0.80)  pitch sd 3.9 st  ex 0.50 cfg 0.50  pause 0.55
+       script: The bytes are still there.
+       heard : The bytes are still there.
+       (take 2: sim 1.00, 1.2 s, pitch sd 3.4 st, heard: The bytes are still there.)
+  4. take 1 of 3  sim 1.00  1.7 s  2.3 words/s (was 2.6, slowed x0.93)  pitch sd 7.3 st  ex 0.70 cfg 0.30  pause 1.00
+       script: But nothing, opens them.
+       heard : but nothing. Opens them.
+       (take 2: sim 1.00, 1.7 s, pitch sd 5.5 st, heard: But nothing opens them.)
+       (take 3: sim 1.00, 1.3 s, pitch sd 4.1 st, heard: But nothing opens them.)
+  5. take 1 of 2  sim 1.00  2.0 s  3.0 words/s (was 3.2, slowed x0.98)  pitch sd 5.4 st  ex 0.50 cfg 0.50  pause 0.40
+       script: A drawing, made in Mac Paint.
+       heard : a drawing made in Mac Paint.
+       (take 2: sim 1.00, 1.7 s, pitch sd 5.0 st, heard: a drawing made in Mac Paint.)
+  6. take 1 of 2  sim 1.00  2.2 s  3.2 words/s (was 3.6, slowed x0.90)  pitch sd 4.7 st  ex 0.50 cfg 0.50  pause 0.40
+       script: A budget, in Lotus one two three.
+       heard : a budget, in Lotus 123.
+       (take 2: sim 0.91, 1.9 s, pitch sd 3.7 st, heard: a budget, and lotus123.)
+  7. take 1 of 2  sim 1.00  2.0 s  2.5 words/s  pitch sd 5.6 st  ex 0.55 cfg 0.45  pause 1.00
+       script: A letter, typed in WordStar.
+       heard : A letter typed in WordStar.
+       (take 2: sim 1.00, 1.5 s, pitch sd 5.5 st, heard: A letter typed in Wordstar.)
+  8. take 2 of 5  sim 0.96  1.5 s  2.0 words/s  pitch sd 6.2 st  ex 0.75 cfg 0.30  pause 0.00
+       script: This, is Exhume.
+       heard : This is Exhumed.
+       (take 1: sim 0.87, 1.3 s, pitch sd 0.4 st, heard: This is X-Home.)
+       (take 3: sim 0.88, 1.3 s, pitch sd 4.9 st, heard: This is Exx Home.)
+       (take 4: sim 0.96, 1.2 s, pitch sd 0.6 st, heard: This is Exhumed.)
+       (take 5: sim 0.76, 1.3 s, pitch sd 9.5 st, heard: This is XQM.)
+  -> 01-hook.voice.wav 20.0 s
+  finished clip heard: What happens to a file when the last program that could read it is gone? The bytes are still there, but nothing opens them. A drawing made in MacPaint. A budget in Lotus123. A letter typed in Wordstar. This is Exhumed.
+== 02-drop
+  1. take 2 of 2  sim 1.00  2.6 s  3.1 words/s (was 4.0, slowed x0.80)  pitch sd 3.6 st  ex 0.60 cfg 0.40  pause 0.80
+       script: So, drop a dead file on the page.
+       heard : So, drop a dead file on the page.
+       (take 1: sim 1.00, 1.9 s, pitch sd 2.5 st, heard: So, drop a dead file on the page.)
+  2. take 2 of 2  sim 1.00  1.9 s  3.6 words/s (was 4.8, slowed x0.80)  pitch sd 5.6 st  ex 0.50 cfg 0.50  pause 0.25
+       script: It reads the bytes, not the name,
+       heard : It reads the bytes, not the name.
+       (take 1: sim 1.00, 1.7 s, pitch sd 3.5 st, heard: It reads the bytes, not the name.)
+  3. take 2 of 2  sim 1.00  2.6 s  3.1 words/s (was 3.8, slowed x0.84)  pitch sd 4.8 st  ex 0.50 cfg 0.50  pause 0.55
+       script: and decodes them right here, in your browser.
+       heard : and decodes them right here in your browser.
+       (take 1: sim 1.00, 2.0 s, pitch sd 4.4 st, heard: and decodes them right here in your browser.)
+  4. take 2 of 3  sim 1.00  1.4 s  2.1 words/s  pitch sd 7.4 st  ex 0.65 cfg 0.30  pause 1.00
+       script: Nothing, is uploaded.
+       heard : Nothing is uploaded.
+       (take 1: sim 1.00, 1.6 s, pitch sd 1.6 st, heard: Nothing is uploaded.)
+       (take 3: sim 1.00, 1.2 s, pitch sd 4.0 st, heard: Nothing is uploaded.)
+  5. take 3 of 3  sim 1.00  2.8 s  2.8 words/s (was 3.6, slowed x0.80)  pitch sd 7.5 st  ex 0.70 cfg 0.35  pause 0.50
+       script: And there it is: a Mac Paint drawing.
+       heard : And there it is, a Mac Paint drawing!
+       (take 1: sim 0.91, 1.9 s, pitch sd 6.5 st, heard: And there it is, a Mac page drawing.)
+       (take 2: sim 1.00, 2.1 s, pitch sd 6.6 st, heard: And there it is, a Mac Paint drawing.)
+  6. take 1 of 2  sim 1.00  2.2 s  2.8 words/s (was 3.0, slowed x0.98)  pitch sd 3.9 st  ex 0.50 cfg 0.50  pause 0.00
+       script: Every dot is black, or white.
+       heard : Every dot is black or white.
+       (take 2: sim 1.00, 1.9 s, pitch sd 2.7 st, heard: Every dot is black or white.)
+  -> 02-drop.voice.wav 16.6 s
+  finished clip heard: So, drop a dead file on the page. It reads the byte, it's not the name, and decodes them right here in your browser. Nothing is uploaded. And there it is, a Mac Paint drawing. Every dot is black or white.
+== 03-autopsy
+  1. take 1 of 2  sim 1.00  2.2 s  2.7 words/s (was 3.1, slowed x0.91)  pitch sd 5.5 st  ex 0.60 cfg 0.40  pause 0.70
+       script: And every decoder, shows its work.
+       heard : and every decoder shows its work.
+       (take 2: sim 1.00, 1.9 s, pitch sd 5.3 st, heard: and every decoder shows its work.)
+  2. take 1 of 2  sim 1.00  3.5 s  2.8 words/s (was 3.1, slowed x0.94)  pitch sd 5.4 st  ex 0.55 cfg 0.45  pause 0.60
+       script: This is the autopsy: the whole file, byte by byte.
+       heard : This is the autopsy, the whole file, byte by byte.
+       (take 2: sim 1.00, 2.5 s, pitch sd 4.6 st, heard: This is the autopsy, the whole file, byte by byte.)
+  3. take 1 of 2  sim 1.00  1.1 s  2.8 words/s (was 3.4, slowed x0.90)  pitch sd 0.0 st  ex 0.50 cfg 0.50  pause 0.20
+       script: Pick any byte,
+       heard : Pick any byte.
+       (take 2: sim 0.91, 0.9 s, pitch sd 3.2 st, heard: Pick any bite.)
+  4. take 1 of 2  sim 1.00  1.9 s  3.8 words/s (was 5.0, slowed x0.80)  pitch sd 5.1 st  ex 0.50 cfg 0.50  pause 0.40
+       script: and it tells you what it is.
+       heard : and it tells you what it is.
+       (take 2: sim 1.00, 1.2 s, pitch sd 3.8 st, heard: and it tells you what it is.)
+  5. take 2 of 2  sim 1.00  1.0 s  3.1 words/s  pitch sd 6.0 st  ex 0.45 cfg 0.55  pause 0.30
+       script: A brush pattern.
+       heard : a brush pattern.
+       (take 1: sim 1.00, 0.9 s, pitch sd 5.8 st, heard: a brush pattern.)
+  6. take 1 of 2  sim 1.00  1.6 s  3.1 words/s  pitch sd 5.2 st  ex 0.45 cfg 0.55  pause 0.90
+       script: A row of compressed pixels.
+       heard : a row of compressed pixels.
+       (take 2: sim 1.00, 1.9 s, pitch sd 3.5 st, heard: a row of compressed pixels.)
+  7. take 3 of 3  sim 1.00  2.6 s  2.3 words/s (was 3.0, slowed x0.81)  pitch sd 5.1 st  ex 0.70 cfg 0.30  pause 0.00
+       script: Every single byte, is accounted for.
+       heard : Every single byte is accounted for.
+       (take 1: sim 1.00, 1.8 s, pitch sd 4.7 st, heard: Every single byte is accounted for.)
+       (take 2: sim 1.00, 1.9 s, pitch sd 5.0 st, heard: Every single byte is accounted for.)
+  -> 03-autopsy.voice.wav 16.9 s
+  finished clip heard: and every decoder shows its work. This is the autopsy, the whole file, byte by byte. Pick any byte, and it tells you what it is. A brush pattern, a row of compressed pixels. Every single byte is accounted for.
+== 04-lotus
+  1. take 2 of 2  sim 1.00  1.8 s  2.9 words/s (was 3.8, slowed x0.80)  pitch sd 5.3 st  ex 0.60 cfg 0.40  pause 0.70
+       script: It is not only pictures.
+       heard : It is not only pictures.
+       (take 1: sim 1.00, 1.5 s, pitch sd 2.9 st, heard: It is not only pictures.)
+  2. take 1 of 2  sim 1.00  2.8 s  2.9 words/s (was 3.4, slowed x0.87)  pitch sd 5.2 st  ex 0.50 cfg 0.50  pause 0.50
+       script: This, is a Lotus one two three worksheet.
+       heard : This is a Lotus 1-2-3 worksheet.
+       (take 2: sim 1.00, 2.2 s, pitch sd 5.0 st, heard: This is a Lotus 1-2-3 worksheet.)
+  3. take 1 of 2  sim 1.00  2.4 s  3.0 words/s (was 3.9, slowed x0.80)  pitch sd 6.0 st  ex 0.50 cfg 0.50  pause 0.35
+       script: Its formulas were never stored as text.
+       heard : Its formulas were never stored as text.
+       (take 2: sim 1.00, 1.9 s, pitch sd 4.7 st, heard: Its formulas were never stored as text.)
+  4. take 1 of 3  sim 1.00  1.6 s  3.1 words/s (was 4.2, slowed x0.80)  pitch sd 6.2 st  ex 0.65 cfg 0.35  pause 0.70
+       script: They were stored as bytecode.
+       heard : They were stored as bytecode.
+       (take 2: sim 1.00, 1.3 s, pitch sd 4.3 st, heard: They were stored as bytecode.)
+       (take 3: sim 1.00, 1.0 s, pitch sd 0.0 st, heard: They were stored as bytecode.)
+  5. take 2 of 2  sim 1.00  1.8 s  1.6 words/s  pitch sd 6.5 st  ex 0.50 cfg 0.50  pause 0.25
+       script: Exhume decompiles them,
+       heard : Exhume decompiles them.
+       (take 1: sim 0.87, 1.4 s, pitch sd 4.8 st, heard: Exeun decompiles them.)
+  6. take 1 of 2  sim 1.00  1.8 s  2.3 words/s  pitch sd 5.6 st  ex 0.50 cfg 0.50  pause 0.30
+       script: translates them to Excel,
+       heard : translates them to Excel.
+       (take 2: sim 0.90, 1.4 s, pitch sd 2.6 st, heard: slates them to Excel.)
+  7. take 3 of 3  sim 1.00  2.7 s  2.6 words/s (was 3.3, slowed x0.80)  pitch sd 6.0 st  ex 0.70 cfg 0.30  pause 0.00
+       script: and exports a workbook, that still calculates.
+       heard : and exports a workbook. That still calculates.
+       (take 1: sim 1.00, 2.5 s, pitch sd 4.7 st, heard: and exports a workbook that still calculates.)
+       (take 2: sim 1.00, 2.4 s, pitch sd 0.9 st, heard: and exports a workbook that still calculates.)
+  -> 04-lotus.voice.wav 17.6 s
+  finished clip heard: It is not only pictures. This is a Lotus 1-2-3 worksheet. Its formulas were never stored as text. They were stored as bio-code. Exhumed decompiles them, translates them to Excel, and exports a workbook that still calculates.
+== 05a-dbase
+  1. take 2 of 2  sim 0.97  2.0 s  3.1 words/s (was 4.0, slowed x0.80)  pitch sd 5.0 st  ex 0.50 cfg 0.50  pause 0.50
+       script: Here is a dee base table.
+       heard : Here is a debase table.
+       (take 1: sim 1.00, 1.4 s, pitch sd 3.4 st, heard: Here is a D-base table.)
+  2. take 3 of 3  sim 0.98  1.5 s  2.6 words/s (was 3.1, slowed x0.91)  pitch sd 6.0 st  ex 0.70 cfg 0.35  pause 0.45
+       script: The rows somebody deleted?
+       heard : The row is somebody deleted?
+       (take 1: sim 1.00, 1.2 s, pitch sd 4.4 st, heard: The rows somebody deleted?)
+       (take 2: sim 1.00, 1.3 s, pitch sd 5.3 st, heard: The rows, somebody deleted.)
+  3. take 3 of 3  sim 1.00  1.4 s  3.0 words/s (was 4.0, slowed x0.80)  pitch sd 5.3 st  ex 0.65 cfg 0.30  pause 0.00
+       script: They are still there.
+       heard : They are still there.
+       (take 1: sim 1.00, 1.2 s, pitch sd 3.5 st, heard: They are still there.)
+       (take 2: sim 0.87, 2.3 s, pitch sd 5.8 st, heard: Find R, they are still there.)
+  -> 05a-dbase.voice.wav 5.8 s
+  finished clip heard: Here is a debased table. The rows somebody deleted, they are still there.
+== 05b-wordstar
+  1. take 2 of 2  sim 1.00  2.5 s  2.8 words/s (was 3.2, slowed x0.90)  pitch sd 5.2 st  ex 0.55 cfg 0.45  pause 0.00
+       script: A WordStar letter, on fan fold paper.
+       heard : a word star letter on fanfold paper.
+       (take 1: sim 0.95, 1.9 s, pitch sd 4.4 st, heard: A WordStar letter on fanfel paper.)
+  -> 05b-wordstar.voice.wav 2.5 s
+  finished clip heard: a word star letter on van Volde paper.
+== 05c-damaged
+  1. take 2 of 3  sim 1.00  1.8 s  3.3 words/s (was 4.3, slowed x0.80)  pitch sd 5.0 st  ex 0.65 cfg 0.35  pause 0.80
+       script: And when a file is damaged?
+       heard : And when a file is damaged,
+       (take 1: sim 1.00, 1.5 s, pitch sd 4.8 st, heard: and when a file is damaged.)
+       (take 3: sim 1.00, 1.1 s, pitch sd 4.5 st, heard: And when a file is damaged,)
+  2. take 1 of 3  sim 1.00  1.4 s  3.0 words/s (was 4.0, slowed x0.80)  pitch sd 3.2 st  ex 0.70 cfg 0.30  pause 0.70
+       script: It does not guess.
+       heard : It does not guess.
+       (take 2: sim 1.00, 0.8 s, pitch sd 2.1 st, heard: It does not guess.)
+       (take 3: sim 1.00, 1.0 s, pitch sd 1.7 st, heard: It does not guess.)
+  3. take 2 of 2  sim 1.00  2.8 s  2.9 words/s (was 3.2, slowed x0.93)  pitch sd 5.8 st  ex 0.50 cfg 0.50  pause 0.00
+       script: The coroner's report lists exactly what was lost.
+       heard : The coroner's report lists exactly what was lost.
+       (take 1: sim 1.00, 2.2 s, pitch sd 2.5 st, heard: The coroner's report lists exactly what was lost.)
+  -> 05c-damaged.voice.wav 7.4 s
+  finished clip heard: And when a file is damaged, it does not guess. The coroner's report lists exactly what was lost.
+== 06-spec
+  1. take 2 of 3  sim 1.00  1.8 s  2.8 words/s (was 3.7, slowed x0.80)  pitch sd 5.6 st  ex 0.65 cfg 0.35  pause 0.70
+       script: So, how was it built?
+       heard : So, how was it built?
+       (take 1: sim 1.00, 1.4 s, pitch sd 4.8 st, heard: So, how was it built?)
+       (take 3: sim 1.00, 1.3 s, pitch sd 4.7 st, heard: So, how was it built?)
+  2. take 5 of 5  sim 1.00  1.7 s  2.4 words/s (was 3.0, slowed x0.84)  pitch sd 6.2 st  ex 0.65 cfg 0.35  pause 0.70
+       script: Spec first, with Keero.
+       heard : Spec first with Kiro.
+       (take 1: sim 1.00, 1.4 s, pitch sd 2.3 st, heard: Spec first with Kiro.)
+       (take 2: sim 0.81, 1.5 s, pitch sd 4.1 st, heard: It's back first with Kiro.)
+       (take 3: sim 1.00, 1.4 s, pitch sd 1.6 st, heard: Spec first with Kiro.)
+       (take 4: sim 1.00, 1.3 s, pitch sd 1.3 st, heard: Spec first with Kiro.)
+  3. take 1 of 2  sim 1.00  1.4 s  3.5 words/s (was 4.7, slowed x0.80)  pitch sd 6.1 st  ex 0.50 cfg 0.50  pause 0.20
+       script: From a two page brief,
+       heard : from a two-page brief
+       (take 2: sim 1.00, 1.1 s, pitch sd 5.1 st, heard: From a two-page brief...)
+  4. take 2 of 2  sim 1.00  2.2 s  2.3 words/s  pitch sd 6.3 st  ex 0.50 cfg 0.50  pause 0.30
+       script: Keero wrote twenty three requirements,
+       heard : Kiro wrote 23 requirements.
+       (take 1: sim 1.00, 1.9 s, pitch sd 5.9 st, heard: Kiro wrote 23 requirements.)
+  5. take 2 of 2  sim 1.00  2.4 s  2.5 words/s  pitch sd 4.8 st  ex 0.50 cfg 0.50  pause 0.30
+       script: a design, with twelve correctness properties,
+       heard : A design with 12 correctness properties
+       (take 1: sim 1.00, 2.3 s, pitch sd 3.7 st, heard: A design with 12 correctness properties)
+  6. take 2 of 2  sim 1.00  1.5 s  2.7 words/s  pitch sd 6.6 st  ex 0.55 cfg 0.45  pause 0.70
+       script: and twenty six tasks.
+       heard : and 26 tasks.
+       (take 1: sim 1.00, 1.5 s, pitch sd 3.4 st, heard: and 26 tasks.)
+  7. take 2 of 2  sim 1.00  1.9 s  2.7 words/s (was 3.4, slowed x0.82)  pitch sd 3.5 st  ex 0.60 cfg 0.40  pause 0.20
+       script: That spec became the contract,
+       heard : That spec became the contract.
+       (take 1: sim 0.92, 1.5 s, pitch sd 4.8 st, heard: That's bet became the contract.)
+  8. take 2 of 2  sim 1.00  1.6 s  3.8 words/s (was 5.1, slowed x0.80)  pitch sd 7.3 st  ex 0.60 cfg 0.40  pause 0.00
+       script: for all the code that followed.
+       heard : for all the code that followed.
+       (take 1: sim 1.00, 1.2 s, pitch sd 4.4 st, heard: for all the code that followed.)
+  -> 06-spec.voice.wav 17.6 s
+  finished clip heard: So, how was it built? Spec first with Kiro. From a two-page brief, Kiro wrote 23 requirements, a design with 12 correctness properties, and 26 tasks. That spec became the contract for all of the code that followed.
+== 07-kiro
+  1. take 2 of 2  sim 1.00  1.9 s  2.6 words/s  pitch sd 5.7 st  ex 0.50 cfg 0.50  pause 0.30
+       script: Steering files carry the promises:
+       heard : Steering files carry the promises.
+       (take 1: sim 1.00, 1.7 s, pitch sd 5.5 st, heard: Steering files carry the promises.)
+  2. take 1 of 2  sim 1.00  2.4 s  1.6 words/s  pitch sd 5.0 st  ex 0.60 cfg 0.40  pause 0.60
+       script: private, honest, never crashes.
+       heard : Private, honest, never crashes.
+       (take 2: sim 1.00, 2.2 s, pitch sd 4.5 st, heard: Private, honest, never crashes.)
+  3. take 2 of 2  sim 1.00  2.9 s  3.1 words/s (was 3.3, slowed x0.96)  pitch sd 5.6 st  ex 0.50 cfg 0.50  pause 0.70
+       script: Hooks enforce them, on every file an agent saves.
+       heard : Hooks enforce them on every file an agent saves.
+       (take 1: sim 0.92, 2.6 s, pitch sd 4.9 st, heard: Hoax enforces them on every file an agent saves.)
+  4. take 2 of 2  sim 1.00  2.5 s  3.5 words/s (was 4.6, slowed x0.80)  pitch sd 5.7 st  ex 0.60 cfg 0.40  pause 0.30
+       script: It even ships its own M C P server,
+       heard : It even ships its own MCP server.
+       (take 1: sim 1.00, 2.2 s, pitch sd 4.0 st, heard: It even ships its own MCP server)
+  5. take 2 of 2  sim 1.00  3.8 s  3.2 words/s (was 4.0, slowed x0.80)  pitch sd 5.9 st  ex 0.55 cfg 0.40  pause 0.70
+       script: so an agent can look inside a binary file, instead of guessing.
+       heard : So an agent can look inside a binary file instead of guessing
+       (take 1: sim 1.00, 3.3 s, pitch sd 5.3 st, heard: So, an agent can look inside a binary file, instead of guessing.)
+  6. take 1 of 2  sim 1.00  1.5 s  2.7 words/s  pitch sd 5.4 st  ex 0.50 cfg 0.50  pause 0.40
+       script: One custom agent digs.
+       heard : One custom agent digs.
+       (take 2: sim 0.97, 1.3 s, pitch sd 5.2 st, heard: One custom Agent Diggs)
+  7. take 1 of 2  sim 1.00  2.1 s  1.9 words/s  pitch sd 6.0 st  ex 0.60 cfg 0.40  pause 0.00
+       script: Another, the coroner, reviews.
+       heard : Another, The Coroner, reviews.
+       (take 2: sim 1.00, 1.8 s, pitch sd 4.6 st, heard: Another, the coroner, reviews.)
+  -> 07-kiro.voice.wav 20.1 s
+  finished clip heard: Steering files carry the promises. Private, honest, never crashes. Hokes enforce them on every file an agent saves. It even ships its own MCP server, so an agent can look inside a binary file instead of guessing. One custom agent digs. Another, the coroner, reviews.
+== 08-honest
+  1. take 1 of 3  sim 1.00  1.4 s  2.8 words/s (was 3.8, slowed x0.80)  pitch sd 6.2 st  ex 0.65 cfg 0.35  pause 0.80
+       script: Now, the honest part.
+       heard : Now, the honest part.
+       (take 2: sim 1.00, 1.3 s, pitch sd 4.3 st, heard: Now, the honest part.)
+       (take 3: sim 1.00, 1.2 s, pitch sd 6.2 st, heard: Now, the honest part?)
+  2. take 1 of 2  sim 1.00  2.8 s  2.9 words/s (was 3.5, slowed x0.86)  pitch sd 6.0 st  ex 0.50 cfg 0.50  pause 0.30
+       script: This entry was built on Keero's free tier:
+       heard : This entry was built on Kiro's free tier.
+       (take 2: sim 0.98, 2.1 s, pitch sd 3.3 st, heard: This entry was built on Kero's free tier.)
+  3. take 2 of 3  sim 0.79  1.5 s  2.7 words/s (was 3.7, slowed x0.80)  pitch sd 6.0 st  ex 0.60 cfg 0.35  pause 0.70   <-- CHECK
+       script: fifty credits a month.
+       heard : 50 credits a month.
+       (take 1: sim 0.79, 0.9 s, pitch sd 4.4 st, heard: 50 credits a month.)
+       (take 3: sim 0.79, 1.0 s, pitch sd 3.8 st, heard: 50 credits a month.)
+  4. take 2 of 2  sim 1.00  3.8 s  3.2 words/s (was 4.1, slowed x0.80)  pitch sd 5.0 st  ex 0.50 cfg 0.50  pause 0.50
+       script: So Keero wrote the spec, and the tasks those credits could buy.
+       heard : So Kiro wrote the spec and the tasks those credits could buy.
+       (take 1: sim 1.00, 3.3 s, pitch sd 4.1 st, heard: So, Kiro wrote the spec and the tasks those credits could buy.)
+  5. take 2 of 2  sim 1.00  3.8 s  3.1 words/s (was 4.0, slowed x0.80)  pitch sd 3.8 st  ex 0.50 cfg 0.50  pause 0.70
+       script: An A I pair programmer built the rest, and reviewed every run.
+       heard : an AI pair programmer built the rest and reviewed every run.
+       (take 1: sim 1.00, 3.4 s, pitch sd 3.7 st, heard: An AI pair programmer built the rest and reviewed every run.)
+  6. take 1 of 2  sim 0.99  3.5 s  2.8 words/s (was 3.0, slowed x0.98)  pitch sd 6.5 st  ex 0.60 cfg 0.40  pause 0.00
+       script: Every transcript, and what it cost, is in the repository.
+       heard : Every transcript, and what it costs, is in the repository.
+       (take 2: sim 0.99, 3.0 s, pitch sd 5.4 st, heard: Every transcript and what it costs is in the repository.)
+  -> 08-honest.voice.wav 19.8 s
+  finished clip heard: Now the honest part, this entry was built on Kiro's free tier, 50 credits a month. So Kiro wrote the SPAC and the tasks those credits could buy. An AI pair programmer built the rest and reviewed every run. Every transcript and what it cost is in the repository.
+== 09-close
+  1. take 1 of 2  sim 0.85  1.3 s  2.4 words/s  pitch sd 5.8 st  ex 0.55 cfg 0.45  pause 0.50
+       script: Six dead formats.
+       heard : 6 dead formats.
+       (take 2: sim 0.85, 1.4 s, pitch sd 4.7 st, heard: 6 dead formats.)
+  2. take 1 of 2  sim 0.42  1.5 s  2.0 words/s  pitch sd 6.4 st  ex 0.50 cfg 0.50  pause 0.50   <-- CHECK
+       script: Four hundred tests.
+       heard : 400 tests.
+       (take 2: sim 0.42, 1.2 s, pitch sd 4.0 st, heard: 400 tests.)
+  3. take 2 of 2  sim 1.00  1.6 s  2.5 words/s (was 2.8, slowed x0.94)  pitch sd 4.8 st  ex 0.60 cfg 0.40  pause 0.35
+       script: No server. No upload.
+       heard : No server, no upload.
+       (take 1: sim 1.00, 1.4 s, pitch sd 4.8 st, heard: No server, no upload,)
+  4. take 1 of 2  sim 1.00  1.3 s  3.0 words/s (was 4.1, slowed x0.80)  pitch sd 5.0 st  ex 0.60 cfg 0.40  pause 1.00
+       script: And it works offline.
+       heard : and it works offline.
+       (take 2: sim 1.00, 1.0 s, pitch sd 3.7 st, heard: and it works offline.)
+  5. take 5 of 5  sim 0.89  2.4 s  2.1 words/s (was 2.8, slowed x0.80)  pitch sd 5.4 st  ex 0.75 cfg 0.30  pause 0.00
+       script: Exhume: raise your dead files.
+       heard : Exume, raise your debt files.
+       (take 1: sim 0.98, 1.6 s, pitch sd 2.9 st, heard: Exhum, raise your dead files.)
+       (take 2: sim 0.84, 1.8 s, pitch sd 5.2 st, heard: Exume razor-dead files.)
+       (take 3: sim 0.88, 1.9 s, pitch sd 6.1 st, heard: Ex-Zoom. Raise your dead files.)
+       (take 4: sim 0.84, 1.8 s, pitch sd 2.1 st, heard: Exchume razor-dead files.)
+  -> 09-close.voice.wav 10.4 s
+  finished clip heard: 6 dead formats. 400 tests. No server, no upload, and it works offline. Exume, raise your dead files.
+
+NEW: 359 words, 127.2 s of speech, 2.82 words/s while speaking, mean pitch sd 5.44 semitones per line
+OLD: 372 words, 106.4 s of speech, 3.50 words/s while speaking, mean pitch sd 4.11 semitones per phrase

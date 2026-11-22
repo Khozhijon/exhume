@@ -1,1 +1,0 @@
-Drop a dead file on the page. The bytes are read, not the file name, and the file is decoded right here in the browser tab. Nothing is uploaded. This is a Mac Paint drawing: five hundred seventy six by seven hundred twenty dots, each one black or white.

@@ -1,1 +1,0 @@
-Every decoder shows its work. The autopsy is the whole file, byte by byte. Select a byte, and Exhume tells you what it is: a brush pattern, or a row of compressed pixels. Select a structure, and you see its bytes. Every byte is accounted for.

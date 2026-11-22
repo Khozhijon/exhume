@@ -9,4 +9,7 @@ coverage/
 video/tts-cache/
 video/out/
 video/nar/*.wav
+video/nar/*.lines.json
+video/nar/lines/
+video/nar/old/
 video/frames/
