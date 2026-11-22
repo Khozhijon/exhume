@@ -6,7 +6,7 @@
 
 **Category:** Resurrection
 
-**Links:** live app https://khozhijon.github.io/exhume/ · repository (public, MIT) https://github.com/Khozhijon/exhume · video (YouTube): added when the video is published.
+**Links:** live app https://khozhijon.github.io/exhume/ · repository (public, MIT) https://github.com/Khozhijon/exhume · video https://youtu.be/AJCUTo_KywI
 
 **Built with:** kiro, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, github-pages
 
