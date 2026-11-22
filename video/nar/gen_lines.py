@@ -139,7 +139,14 @@ for c in clips:
             ok = named or ok
         if not ok:
             ok = [int(np.argmax([m["sim"] for m in ms]))]
-        pick = max(ok, key=lambda k: ms[k]["st_std"])
+        # no time-stretching any more (WSOLA at 0.8x made syllables sound doubled, 22 Nov): among the good
+        # takes, prefer those already near the target pace, then the most melodic; else the slowest one
+        target = opt(line, "wps")
+        paced = [k for k in ok if ms[k]["wps"] <= target * 1.2]
+        if paced:
+            pick = max(paced, key=lambda k: ms[k]["st_std"])
+        else:
+            pick = min(ok, key=lambda k: ms[k]["wps"])
         m = ms[pick]
         sr = m["sr"]
         y, _ = sf.read(takes[pick]["path"], dtype="float32")
@@ -149,10 +156,7 @@ for c in clips:
         seg = y[max(0, m["a"] - pad): min(len(y), m["b"] + pad)].copy()
         fade = int(0.012 * sr)
         # pace: a line that came out faster than its target is slowed down (pitch kept), by 20% at most
-        target = opt(line, "wps")
-        rate = min(1.0, max(0.8, target / m["wps"]))
-        if rate < 0.985:
-            seg = slow_down(seg, rate)
+        rate = 1.0  # natural speed, never stretched
         seg[:fade] *= np.linspace(0, 1, fade)
         seg[-fade:] *= np.linspace(1, 0, fade)
         spoken = len(seg) / sr

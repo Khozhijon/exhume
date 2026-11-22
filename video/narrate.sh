@@ -11,4 +11,7 @@ CACHE="${TTS_CACHE:-$PWD/video/tts-cache}"
 mkdir -p "$CACHE/hf" "$CACHE/pip"
 docker run --rm -v "$PWD/video":/v -v "$CACHE":/cache -w /v -e HF_HOME=/cache/hf -e PIP_CACHE_DIR=/cache/pip \
   python:3.11-slim sh -c "apt-get update -qq >/dev/null && apt-get install -y -qq libgomp1 libsndfile1 >/dev/null 2>&1; pip install -q --root-user-action=ignore chatterbox-tts soundfile faster-whisper pytsmod 2>&1 | tail -3; python /v/nar/gen_lines.py $*"
+# gen_lines.py also joins the clips; assemble.mjs does it again on the host with the final choice of takes
+# and pauses (never time-stretched). Run it after any change to the pauses in script.json.
+node video/assemble.mjs
 echo NARRATION_DONE

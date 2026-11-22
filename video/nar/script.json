@@ -1,12 +1,13 @@
 {
- "about": "Narration for the demo video, one take per line. say = what the voice is given (some words spelled the way they sound, and commas where a breath belongs); show = the caption (defaults to say, tidied). ex = Chatterbox exaggeration (higher: more expressive), cfg = cfg_weight, wps = the fastest this line may be, in words per second (a faster take is slowed down, pitch kept, by 20% at most), pause = silence after the line in seconds, takes = how many takes to generate and choose from. Measured on this voice: cfg_weight does not change the pace; short phrases and commas do.",
+ "about": "Narration for the demo video, one take per line. say = what the voice is given (some words spelled the way they sound, and commas where a breath belongs); show = the caption (defaults to say, tidied). ex = Chatterbox exaggeration (higher: more expressive), cfg = cfg_weight, wps = the pace this line asks for, in words per second (a take that races past it loses to a calmer one; nothing is time-stretched: that made the voice stutter), pauseScale multiplies every pause, pause = silence after the line in seconds, takes = how many takes to generate and choose from. Measured on this voice: cfg_weight does not change the pace; short phrases and commas do.",
  "defaults": {
   "ex": 0.5,
   "cfg": 0.5,
   "temp": 0.8,
   "wps": 3.1,
   "pause": 0.3,
-  "takes": 2
+  "takes": 2,
+  "pauseScale": 1.25
  },
  "clips": [
   {
