@@ -98,7 +98,8 @@ written from the published format descriptions. Runtime dependencies: React and 
 - **The cheapest model was the most expensive.** The first four tasks went to the model with the
   lowest credit multiplier. It needed four to ten times as many steps, re-read files and looped on
   its own failing tests, and every step re-sends the context: 4.6, 8.9, 3.5 and 6.6 credits. A
-  stronger model at eight times the multiplier then did comparable tasks for under one credit each.
+  stronger model at eight times the multiplier then did the two viewer tasks for under one credit
+  each.
   Cost is steps times context, not the price tag.
 - **Agents typing data from memory.** One session tried to write four 128-entry code page tables by
   recall and got them wrong. Lookup tables are generated from the Unicode mapping data now.
@@ -107,6 +108,10 @@ written from the published format descriptions. Runtime dependencies: React and 
   has a review note and a regression test.
 - **Hooks that never fired.** The first file-save matchers were anchored to relative paths while Kiro
   passes absolute ones. The transcripts showed zero runs; fixed, then 74.
+- **A promise that was not kept.** The first service worker stored no scripts or styles on a first
+  visit, so "works offline" was false while the page already said "Offline ready". It was found on the
+  live site, fixed, and is now checked by a real test: visit once, cut the network, reload, open every
+  sample.
 - **Round trips force precision.** "decode(encode(m)) equals m" sounds simple until it has to hold
   for palettes of any length, WordStar soft line breaks and Lotus formula parentheses.
 
@@ -116,7 +121,7 @@ written from the published format descriptions. Runtime dependencies: React and 
   field is, so the explanation and the decoding cannot drift apart, and a property test proves that
   every byte of an encoded file is explained exactly once.
 - Lotus formulas come back to life: bytecode to 1-2-3 text to Excel, and the workbook recalculates.
-- Rows that someone "deleted" in dBASE in 1987 are still in the file, and Exhume shows them.
+- Rows that someone "deleted" in dBASE are still in the file, and Exhume shows them.
 - It never uploads anything, and a hook enforces that in the code.
 
 ## What we learned
@@ -145,3 +150,18 @@ the scaffold, core reader/writer, PackBits, samples generator, two viewers, the 
 pass and a review; the rest was implemented against Kiro's spec with an AI pair-programmer (Claude
 Code) that I directed, which also ran and reviewed every Kiro session (free tier, 50 credits). Full transcripts with per-session cost: docs/kiro-sessions/. Account:
 docs/KIRO.md.
+
+## Entered in the Devpost form on 22 Nov 2026 (draft 1314011, not submitted)
+
+- Project page (draft): https://devpost.com/software/exhume-ix0s73
+- Story: the sections above. Tags: kiro, typescript, react, vite, vitest, fast-check,
+  model-context-protocol, fflate, github. Seven screenshots from `docs/img/` with captions.
+- Category: Resurrection. Submitter type: Individual.
+- "How the project meets the technology requirement": the Kiro breakdown (specs, steering, hooks with
+  run counts, MCP, custom agents, property-based tests, powers not used, what Kiro implemented and
+  what was implemented with the AI pair-programmer).
+- "Pre-existing code": none; first commit 21 Nov 2026; libraries listed.
+- "Testing instructions": no account needed; click a tombstone or drop a file; tested in
+  Chromium-based browsers; `npm install && npm test`.
+- Not entered yet: the Best Student Project bonus prize (needs LinkedIn, student e-mail, year, degree,
+  school), the terms box and Submit.
