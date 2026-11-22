@@ -163,5 +163,6 @@ docs/KIRO.md.
 - "Pre-existing code": none; first commit 21 Nov 2026; libraries listed.
 - "Testing instructions": no account needed; click a tombstone or drop a file; tested in
   Chromium-based browsers; `npm install && npm test`.
-- Not entered yet: the Best Student Project bonus prize (needs LinkedIn, student e-mail, year, degree,
-  school), the terms box and Submit.
+- Prizes entered: Best Student Project: Resurrection (the student details are in the form, visible to
+  judges and organizers only; they are not kept in this repository).
+- Not done yet: the terms box and Submit.
