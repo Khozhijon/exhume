@@ -8,7 +8,7 @@
 
 **Links:** live app https://khozhijon.github.io/exhume/ · repository (public, MIT) https://github.com/Khozhijon/exhume · video (YouTube): added when the video is published.
 
-**Built with:** kiro, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, github-pages, claude-code
+**Built with:** kiro, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, github-pages
 
 ---
 
@@ -79,12 +79,14 @@ Spec first, with **Kiro**.
 - **Kiro CLI, headless.** Every session is a prompt file in and a transcript out, with its credit
   cost, and a review next to it. All of it is in the repository.
 
-**Honest division of labour.** This was built on Kiro's free tier (50 credits a month), which does
-not stretch to 26 implementation tasks. Kiro wrote the spec and implemented the scaffold,
+**Who did what.** Lead developer: Khozhijon. I led the project from idea to submission and directed an AI pair-programmer (Claude Code) that helped write the code, which I reviewed and tested.
+
+This was built on Kiro's free tier (50 credits a month), which does not stretch to 26 implementation
+tasks, so the work was split between the two tools I directed. Kiro wrote the spec and implemented the scaffold,
 `ByteReader`/`ByteWriter`, PackBits, the first MCP server, the samples generator, the Table and
 Document viewers and the offline/accessibility pass, and reviewed a module as the `coroner`.
-**Claude Code** (Anthropic) wrote the steering, hooks, agent definitions and format notes,
-orchestrated and reviewed every Kiro run, and implemented the rest against Kiro's spec: the six format
+The AI pair-programmer wrote the steering, hooks, agent definitions and format notes, ran and
+reviewed every Kiro session, and implemented the rest against Kiro's spec: the six format
 modules, the export layer, the app shell, the sheet and image viewers and the Autopsy.
 `docs/KIRO.md` in the repository has the full account.
 
@@ -140,6 +142,6 @@ PostFileSave test runner 25 runs, SessionStart brief, Stop type-check). The proj
 server (exhume-mcp: identify, hexdump, autopsy, decode) which Kiro used to inspect binary files. Two
 custom agents: gravedigger (implements one task) and coroner (read-only reviewer). Kiro implemented
 the scaffold, core reader/writer, PackBits, samples generator, two viewers, the offline/accessibility
-pass and a review; Claude Code orchestrated, reviewed and implemented the rest against Kiro's spec
-(free tier, 50 credits). Full transcripts with per-session cost: docs/kiro-sessions/. Account:
+pass and a review; the rest was implemented against Kiro's spec with an AI pair-programmer (Claude
+Code) that I directed, which also ran and reviewed every Kiro session (free tier, 50 credits). Full transcripts with per-session cost: docs/kiro-sessions/. Account:
 docs/KIRO.md.

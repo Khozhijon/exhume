@@ -110,15 +110,19 @@ the repository:
   [`docs/kiro-sessions/`](docs/kiro-sessions); reviews of Kiro's work are in
   [`docs/reviews/`](docs/reviews).
 
-**Honest division of labour.** The entry was built on Kiro's free tier (50 credits a month), which
-does not stretch to 26 implementation tasks. So:
+**Who did what.** Lead developer: Khozhijon. I led the project from idea to submission and
+directed an AI pair-programmer (Claude Code) that helped write the code,
+which I reviewed and tested.
+
+The entry was built on Kiro's free tier (50 credits a month), which does not stretch to 26
+implementation tasks. So the work was split between the two tools I directed:
 
 - **Kiro (Kiro CLI, headless)** wrote the spec, and implemented the project scaffold, `ByteReader`
   and `ByteWriter` with their tests, PackBits, the first version of the MCP server, the samples
   generator, the Table Viewer, the Document Viewer and the offline/accessibility pass, and reviewed
   the WordStar module as the `coroner` agent.
-- **Claude Code** (Anthropic) wrote the steering documents, the format notes, the hooks and agent
-  definitions, orchestrated and reviewed every Kiro run, and implemented the rest against Kiro's
+- **The AI pair-programmer** wrote the steering documents, the format notes, the hooks and agent
+  definitions, ran and reviewed every Kiro session, and implemented the rest against Kiro's
   spec: the six format modules, the export layer, the app shell, the Lotus sheet viewer, the image
   viewer and the Autopsy, plus fixes recorded in `docs/reviews/`.
 
