@@ -127,10 +127,10 @@ and accessibility pass; and the WordStar review.
 
 Kiro's free tier (50 credits a month) does not stretch to 26 implementation tasks, so I spent the
 credits where Kiro's features mattered most (spec, hooks in the loop, MCP, a reviewer agent, tightly
-briefed UI tasks) and split the rest between the two tools I directed. The AI pair-programmer wrote
-the steering, hooks, agent definitions and format notes, ran and reviewed every Kiro session, and
-implemented the rest against Kiro's spec: the six format modules, the export layer, the app shell, the
-sheet and image viewers, the Autopsy, and the fixes noted in the reviews. `docs/KIRO.md` in the
+briefed UI tasks) and built the rest against Kiro's spec, with the AI assistant helping write the code: the
+steering, hooks, agent definitions and format notes, the six format modules, the export layer, the app
+shell, the sheet and image viewers, the Autopsy, and the fixes noted in the reviews. Every Kiro session
+has a review note next to its transcript. `docs/KIRO.md` in the
 repository has the full account, including what went wrong.
 
 Stack: TypeScript (strict), React, Vite, Vitest, fast-check. No format libraries: every decoder is
@@ -196,8 +196,8 @@ formula bug that example tests missed. Kiro powers: not used. Kiro implemented t
 ByteReader/ByteWriter, PackBits, the first MCP server, the samples generator, two viewers, the
 offline/accessibility pass and a review. Lead developer: Khozhijon. I led the project from idea to
 submission and directed an AI pair-programmer (Claude Code) that helped write the code, which I
-reviewed and tested; it ran and reviewed every Kiro session and implemented the rest against Kiro's
-spec. Full account: docs/KIRO.md.
+reviewed and tested; the rest was built against Kiro's spec with its help, and every Kiro session has
+a review note. Full account: docs/KIRO.md.
 
 ## Entered in the Devpost form on 22 Nov 2026 (draft 1314011, not submitted)
 
