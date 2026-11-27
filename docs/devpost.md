@@ -215,14 +215,14 @@ spec. Full account: docs/KIRO.md.
   judges and organizers only; they are not kept in this repository).
 - Not done yet: the terms box and Submit.
 
-## Prepared on 26 Nov 2026 (local only, not yet entered in Devpost)
+## Entered in the Devpost form on 26 Nov 2026 (entry stays submitted)
 
 - Story: "How we built it" rewritten as "How we built it: how Kiro was used", one paragraph per item
   in the judges' write-up list (which Kiro, spec, steering, hooks, MCP, custom agents, PBT, powers),
   plus what Kiro wrote, by file. Nothing new is claimed; every number is from docs/KIRO.md and the
   transcripts.
-- Built with: adds kiro-cli, node.js, github-actions (github-pages may again become "github").
-- Technology-requirement field: the short text above.
+- Built with: kiro, kiro-cli, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, node.js, github-actions, github.
+- Technology-requirement field: the 22 Nov list kept, with additions (sessions and credits, why the CLI, spec vs prompting, steering strategy, hook run counts, what MCP showed in the bytes, the PBT counterexample, powers as next step). Not replaced by the short text above.
 - Video: unchanged. Its Kiro scenes already run from 1:38 to 2:38 (spec, steering/hooks/MCP/agents,
   what each session cost and who did what).
 - Paste-ready copy of the story: video/out/devpost-story.md (git-ignored).
