@@ -8,7 +8,7 @@
 
 **Links:** live app https://khozhijon.github.io/exhume/ · repository (public, MIT) https://github.com/Khozhijon/exhume · video https://youtu.be/AJCUTo_KywI
 
-**Built with:** kiro, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, github-pages
+**Built with:** kiro, kiro-cli, typescript, react, vite, vitest, fast-check, model-context-protocol, fflate, node.js, github-actions, github-pages
 
 ---
 
@@ -46,49 +46,92 @@ Lotus 1-2-3 WKS/WK1, dBASE III/IV (including rows marked deleted) and WordStar 3
 sample files, all original works drawn and written for this project, let you try it without owning an
 old disk.
 
-## How we built it
+## How we built it: how Kiro was used
 
-Spec first, with **Kiro**.
+**At a glance.** Kiro CLI 3.5.0, headless, on the free tier: 10 working sessions, about 44 of the
+month's 50 credits, every transcript and its cost in `docs/kiro-sessions/`. The `.kiro/` directory at
+the root of the repository holds one spec (23 requirements, 12 correctness properties, 26 tasks), 5
+steering documents, 6 hooks, the registration of the project's own MCP server and 2 custom agents.
 
-- **Spec.** From a two-page brief and byte-layout notes, one Kiro spec-mode session produced
-  `requirements.md` (23 requirements with EARS acceptance criteria), `design.md` (architecture, core
-  types, 12 numbered correctness properties, recorded decisions) and `tasks.md` (26 tasks, each traced
-  to requirements, property tests as sub-tasks). That spec was the contract for all the code. Five
-  format modules were later written in parallel by agents that never saw each other's work, and they
-  fit together on the first try because they were written against the same design.
-- **Steering.** Five documents: the product's promises (private, honest, never crashes, faithful),
-  tech rules ("no format libraries"), structure, the format-module contract (file-matched to
-  `src/formats/**`) and UI rules (file-matched to `src/ui/**`).
-- **Agent hooks.** A `PreToolUse` shell guard (no git writes, downloads, installers or unlisted
-  dependencies) made it safe to trust the shell in headless runs: 110 runs. Two `PostFileSave` hooks
-  ran on every file an agent saved: one checks the product promises in code (no network calls, no DOM
-  in decoders, no raw `DataView` outside the annotating reader, no UTF-8 decoding of legacy text): 74
-  runs; one runs the tests of the folder that was touched: 25 runs. Plus a `SessionStart` brief and a
-  `Stop` type-check.
-- **MCP.** The project ships its own MCP server, `exhume-mcp`, exposing its decoders as tools
-  (`identify`, `hexdump`, `autopsy`, `decode`), so an agent working on a binary format can look
-  inside a file instead of guessing. Kiro used it to check the sample files it generated, and as a
-  reviewer to confirm in the bytes what the format notes promise.
-- **Custom agents.** `gravedigger` implements one spec task; `coroner` reviews against the spec and
-  may not edit source.
-- **Property-based tests.** Every format passes the same four properties (fast-check): round trip
-  through its own encoder; arbitrary and mutated bytes never cause anything but a clean error;
-  annotations tile an encoded file exactly, every byte explained once; any truncated prefix decodes
-  with a warning or fails cleanly. Plus codec, CSV, XLSX and Lotus-formula round trips. About 400
-  tests in total.
-- **Kiro CLI, headless.** Every session is a prompt file in and a transcript out, with its credit
-  cost, and a review next to it. All of it is in the repository.
+**Which Kiro.** CLI only, headless (`kiro-cli chat --no-interactive`), driven by
+`scripts/kiro-task.sh`. Each session is a prompt file in and a transcript with its credit cost out,
+with a written review next to it, so every piece of Kiro's work can be read, checked and rerun. The
+spec UI's Correctness view is IDE-only, so the link from requirement to property to test is kept by
+convention instead: property numbers in `design.md` are the numbers in the test titles.
+
+**Spec-driven development.** From a two-page brief and byte-layout notes, one spec-mode session (9.8
+credits, a fifth of the month) wrote `.kiro/specs/exhume-core/`:
+- `requirements.md`: 23 requirements with EARS acceptance criteria, one per format, down to the bytes
+  ("IF the compressed input is exhausted before 51,840 bytes are produced, THEN THE SYSTEM SHALL fill
+  remaining pixels with white and add a warning").
+- `design.md`: architecture, core types, the `ByteReader`/`ByteWriter` interfaces, the Lotus formula
+  decompiler, and 12 numbered correctness properties, each ending in "Validates: Requirements x.y".
+- `tasks.md`: 26 tasks, each traced to requirements, with property tests as sub-tasks right after the
+  code they test. All 26 are checked off.
+
+Compared with prompting directly: five format modules were later written in parallel by separate
+agents that never saw each other's code, and they fit together on the first try because they were
+written against the same `design.md`. The sessions that went wrong went wrong on execution, never on
+what we were building.
+
+**Steering.** Five documents: the four promises (private, honest, never crashes, faithful) in
+`product.md`; stack and "no format libraries" in `tech.md`; layout and the `FormatModule` contract in
+`structure.md`; and two file-matched documents, `formats.md` (for `src/formats/**`, `src/core/**`,
+`mcp/**`) and `ui.md` (for `src/ui/**`). The strategy that made the biggest difference: write each
+promise as a testable rule and enforce it twice, once in steering and once in a hook. "Decoders read
+only through `ByteReader`" is one line of steering, and it is why the Autopsy view exists without a
+second parser.
+
+**Agent hooks.** Counts are from the transcripts.
+- `PreToolUse` shell guard: refuses git writes, downloads, installers and unlisted dependencies, so
+  the shell could be trusted in headless runs (110 runs).
+- `PostFileSave` promise guard: no network calls in app code, no DOM in decoders, no raw `DataView`
+  outside the reader, no UTF-8 decoding of legacy text; violations go straight back to the agent (74
+  runs).
+- `PostFileSave` test runner: runs the tests of the folder that was touched (25 runs).
+- `SessionStart` brief with spec progress and the next open task (7 runs); `Stop` type-check before
+  the agent may finish (5 runs); a `PostFileCreate` checklist for new format modules (0 runs: Kiro
+  never created one).
+
+**MCP.** The project ships its own MCP server, `exhume-mcp` (registered in
+`.kiro/settings/mcp.json`), which exposes the project's decoders as tools: `identify`, `hexdump`,
+`autopsy` and `decode`. An agent cannot `cat` a binary file; without the server it guesses, with it,
+it looks. Kiro used it after generating the sample files, to check `GHOST.MAC` and `RESIDENT.DBF` the
+way a user would see them, and as the reviewer agent, to confirm in the bytes of `LETTER.WS` a
+word-final high bit, a soft carriage return (`8D 0A`) and the `^Z` padding.
+
+**Custom agents** (in Kiro CLI). `gravedigger` implements exactly one spec task and marks it done;
+`coroner` reviews against the spec and the properties and may not edit `src/`. Its review of the
+WordStar module (1.0 credit) is `docs/reviews/coroner-wordstar.md`.
+
+**Property-based testing.** The spec names the properties; the tests are fast-check. Every format
+passes the same four from one shared harness: round trip through its own encoder; arbitrary and
+mutated bytes never cause anything but a clean error; annotations tile a file exactly, every byte
+explained once; any truncated prefix decodes with a warning or fails cleanly. They caught what example
+tests would not have: Property 8 (Lotus formulas decompile and compile back to the same text) failed
+on run 368 of one execution, and fast-check shrank the input to ten bytes, a range whose corners were
+stored out of order. The fix and the shrunk counterexample are in the repository. About 400 tests in
+total.
+
+**Kiro powers.** Not used in this build. Packaging the format contract, steering and MCP server as a
+power is the next step (see What's next).
+
+**What Kiro wrote.** The spec (`.kiro/specs/exhume-core/`); the scaffold (`src/core/types.ts`,
+`registry.ts`, `limits.ts`, the app entry); `src/core/reader.ts` and `writer.ts` with their tests;
+`src/core/packbits.ts` with its property tests; the first MCP server (`mcp/lib.mjs`, finished in review); the samples
+generator (`scripts/gen-samples.mjs`, `scripts/samples/`, `src/samples/`); the Table and Document
+viewers (`src/ui/viewers/TableViewer.tsx`, `DocumentViewer.tsx`); the first service worker, manifest
+and accessibility pass; and the WordStar review.
 
 **Who did what.** Lead developer: Khozhijon. I led the project from idea to submission and directed an AI pair-programmer (Claude Code) that helped write the code, which I reviewed and tested.
 
-This was built on Kiro's free tier (50 credits a month), which does not stretch to 26 implementation
-tasks, so the work was split between the two tools I directed. Kiro wrote the spec and implemented the scaffold,
-`ByteReader`/`ByteWriter`, PackBits, the first MCP server, the samples generator, the Table and
-Document viewers and the offline/accessibility pass, and reviewed a module as the `coroner`.
-The AI pair-programmer wrote the steering, hooks, agent definitions and format notes, ran and
-reviewed every Kiro session, and implemented the rest against Kiro's spec: the six format
-modules, the export layer, the app shell, the sheet and image viewers and the Autopsy.
-`docs/KIRO.md` in the repository has the full account.
+Kiro's free tier (50 credits a month) does not stretch to 26 implementation tasks, so I spent the
+credits where Kiro's features mattered most (spec, hooks in the loop, MCP, a reviewer agent, tightly
+briefed UI tasks) and split the rest between the two tools I directed. The AI pair-programmer wrote
+the steering, hooks, agent definitions and format notes, ran and reviewed every Kiro session, and
+implemented the rest against Kiro's spec: the six format modules, the export layer, the app shell, the
+sheet and image viewers, the Autopsy, and the fixes noted in the reviews. `docs/KIRO.md` in the
+repository has the full account, including what went wrong.
 
 Stack: TypeScript (strict), React, Vite, Vitest, fast-check. No format libraries: every decoder is
 written from the published format descriptions. Runtime dependencies: React and `fflate`.
@@ -138,18 +181,23 @@ contract, steering and MCP server as a Kiro Power so that adding a dead format i
 
 ---
 
-## Short "How was Kiro used?" field (if the form has one)
+## Short "How was Kiro used?" field (the form's technology-requirement field)
 
-Spec-driven development in Kiro CLI: one spec-mode session produced requirements (23, EARS), design
-(12 correctness properties) and tasks (26). Steering (5 docs, 2 file-matched) carried the product
-promises; hooks enforced them (PreToolUse shell guard 110 runs, PostFileSave promise guard 74 runs,
-PostFileSave test runner 25 runs, SessionStart brief, Stop type-check). The project ships its own MCP
-server (exhume-mcp: identify, hexdump, autopsy, decode) which Kiro used to inspect binary files. Two
-custom agents: gravedigger (implements one task) and coroner (read-only reviewer). Kiro implemented
-the scaffold, core reader/writer, PackBits, samples generator, two viewers, the offline/accessibility
-pass and a review; the rest was implemented against Kiro's spec with an AI pair-programmer (Claude
-Code) that I directed, which also ran and reviewed every Kiro session (free tier, 50 credits). Full transcripts with per-session cost: docs/kiro-sessions/. Account:
-docs/KIRO.md.
+Kiro CLI 3.5.0, headless, free tier: 10 sessions, about 44 of 50 credits, every transcript with its
+cost in docs/kiro-sessions/. Spec-driven: one spec-mode session wrote requirements (23, EARS), design
+(12 correctness properties) and tasks (26, all done), the contract that let five format modules be
+written in parallel and fit on the first try. Steering: 5 docs, 2 file-matched; each promise is a rule
+in steering and a check in a hook. Hooks: PreToolUse shell guard (110 runs), PostFileSave promise
+guard (74), PostFileSave test runner (25), SessionStart brief (7), Stop type-check (5). MCP: the
+project's own server, exhume-mcp (identify, hexdump, autopsy, decode), which Kiro used to look inside
+binary files instead of guessing. Custom agents: gravedigger (implements one task) and coroner
+(read-only reviewer). Property-based tests from the spec's properties; one found a ten-byte Lotus
+formula bug that example tests missed. Kiro powers: not used. Kiro implemented the spec, scaffold,
+ByteReader/ByteWriter, PackBits, the first MCP server, the samples generator, two viewers, the
+offline/accessibility pass and a review. Lead developer: Khozhijon. I led the project from idea to
+submission and directed an AI pair-programmer (Claude Code) that helped write the code, which I
+reviewed and tested; it ran and reviewed every Kiro session and implemented the rest against Kiro's
+spec. Full account: docs/KIRO.md.
 
 ## Entered in the Devpost form on 22 Nov 2026 (draft 1314011, not submitted)
 
@@ -166,3 +214,15 @@ docs/KIRO.md.
 - Prizes entered: Best Student Project: Resurrection (the student details are in the form, visible to
   judges and organizers only; they are not kept in this repository).
 - Not done yet: the terms box and Submit.
+
+## Prepared on 26 Nov 2026 (local only, not yet entered in Devpost)
+
+- Story: "How we built it" rewritten as "How we built it: how Kiro was used", one paragraph per item
+  in the judges' write-up list (which Kiro, spec, steering, hooks, MCP, custom agents, PBT, powers),
+  plus what Kiro wrote, by file. Nothing new is claimed; every number is from docs/KIRO.md and the
+  transcripts.
+- Built with: adds kiro-cli, node.js, github-actions (github-pages may again become "github").
+- Technology-requirement field: the short text above.
+- Video: unchanged. Its Kiro scenes already run from 1:38 to 2:38 (spec, steering/hooks/MCP/agents,
+  what each session cost and who did what).
+- Paste-ready copy of the story: video/out/devpost-story.md (git-ignored).

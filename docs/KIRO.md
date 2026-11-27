@@ -107,6 +107,11 @@ Kiro's "Correctness" feature (property extraction in the spec UI) is IDE-only, s
 project the link from requirement to property to test is kept by convention: property numbers in
 `design.md`, the same numbers in task names and test titles.
 
+What PBT caught that example tests would not: Property 8 (Lotus formulas decompile and compile back
+to the same text, 3000 runs) failed on run 368 of one execution; fast-check shrank the input to ten
+bytes, a range whose corners are stored out of order. The story and the fix are in
+[`reviews/task-13.md`](reviews/task-13.md).
+
 ## 7. What went wrong, and what it taught
 
 Credits per session (free tier, 50 a month):
