@@ -8,8 +8,8 @@ Tools: **Kiro CLI 3.5.0** in headless mode (`kiro-cli chat --v3 --no-interactive
 tier** (50 credits a month).
 
 Lead developer: Khozhijon. I led the project from idea to submission and directed an AI
-pair-programmer (Claude Code) that helped write the code, which I reviewed and tested. That pair-programmer ran and reviewed
-the Kiro sessions (it is "the reviewer" below) and implemented what the credits could not buy: see
+pair-programmer (Claude Code) that helped write the code, which I reviewed and tested. It helped me run and review
+the Kiro sessions (it is "the reviewer" below) and build what the credits could not buy: see
 "Division of labour" at the end. Nothing here was built before the submission
 period.
 
@@ -147,7 +147,7 @@ Credits per session (free tier, 50 a month):
 
 With 50 credits, Kiro could not implement 26 tasks. So the remaining credits went where Kiro's
 features mattered most (spec, hooks in the loop, MCP, a reviewer agent, UI tasks with a tight brief),
-and the rest was implemented with the AI pair-programmer against Kiro's spec.
+and I built the rest against Kiro's spec, with the AI assistant helping write the code.
 
 **Kiro wrote:** the spec (requirements, design, tasks); the project scaffold; `ByteReader`,
 `ByteWriter` and their tests; the PackBits codec and its property tests; the first MCP server; the
@@ -156,7 +156,7 @@ service worker, manifest and accessibility pass; the WordStar review. It also fi
 found along the way. The service worker did not keep its promise on a first visit; that was found
 on the live site and fixed in review ([`reviews/task-25.md`](reviews/task-25.md)).
 
-**The AI pair-programmer wrote:** the brief, format notes, steering documents, hooks and agent definitions; the
+**Built by me with the AI assistant's help:** the brief, format notes, steering documents, hooks and agent definitions; the
 prompts and review notes for every Kiro session; the six format modules, the export layer and the
 drawing code for the image samples (as parallel subagents, each given the spec and steering as its
 contract); the code page tables, the shared property harness, the final MCP server; the app shell,

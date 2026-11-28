@@ -121,10 +121,10 @@ implementation tasks. So the work was split between the two tools I directed:
   and `ByteWriter` with their tests, PackBits, the first version of the MCP server, the samples
   generator, the Table Viewer, the Document Viewer and the offline/accessibility pass, and reviewed
   the WordStar module as the `coroner` agent.
-- **The AI pair-programmer** wrote the steering documents, the format notes, the hooks and agent
-  definitions, ran and reviewed every Kiro session, and implemented the rest against Kiro's
-  spec: the six format modules, the export layer, the app shell, the Lotus sheet viewer, the image
-  viewer and the Autopsy, plus fixes recorded in `docs/reviews/`.
+- **The rest I built against Kiro's spec, with the AI assistant helping write the code:** the
+  steering documents, the format notes, the hooks and agent definitions, the six format modules,
+  the export layer, the app shell, the Lotus sheet viewer, the image viewer and the Autopsy, plus
+  fixes recorded in `docs/reviews/`. Every Kiro session has a review note next to its transcript.
 
 [`docs/KIRO.md`](docs/KIRO.md) has the full account, including what went wrong.
 
